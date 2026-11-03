@@ -31,7 +31,6 @@
             position: relative;
         }
 
-        /* ====== 1. СНЕГ И 3D ЛУНА ====== */
         #snow-canvas {
             position: fixed;
             top: 0; left: 0;
@@ -54,7 +53,6 @@
             pointer-events: none;
         }
 
-        /* ====== 2. 3D САНИ САНТЫ И ОЛЕНИ ====== */
         .santa-sleigh-track {
             position: fixed;
             top: 80px;
@@ -85,7 +83,6 @@
         @keyframes runBackNear  { 0% { transform: rotate(26deg); }  100% { transform: rotate(-26deg); } }
         @keyframes runBackFar   { 0% { transform: rotate(-22deg); } 100% { transform: rotate(28deg); } }
 
-        /* ====== 3. 3D ЗИМНИЙ ЛЕС ВНИЗУ ====== */
         .winter-landscape-3d {
             position: fixed;
             bottom: 0; left: 0;
@@ -95,7 +92,6 @@
             filter: drop-shadow(0 -10px 25px rgba(0,0,0,0.65));
         }
 
-        /* ====== 4. ВЕРХНЯЯ ГИРЛЯНДА И АДАПТИВНЫЙ TOP-BAR ====== */
         .garland-wrap {
             position: fixed;
             top: 0; left: 0;
@@ -124,12 +120,19 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            gap: 10px;
             z-index: 35;
             pointer-events: none;
         }
 
-        .logout-btn {
+        .hud-left-group {
+            display: flex;
+            align-items: center;
+            gap: 8px;
             pointer-events: auto;
+        }
+
+        .logout-btn {
             background: rgba(230, 57, 70, 0.3);
             border: 1px solid rgba(230, 57, 70, 0.65);
             color: #fff;
@@ -143,6 +146,30 @@
             transition: 0.25s;
         }
         .logout-btn:hover { background: var(--red); }
+
+        .sync-badge {
+            background: rgba(8, 17, 36, 0.85);
+            border: 1px solid rgba(255,255,255,0.15);
+            padding: 7px 11px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 600;
+            color: #cbd5e1;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            backdrop-filter: blur(12px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.4);
+        }
+        .sync-dot {
+            width: 8px; height: 8px;
+            border-radius: 50%;
+            background: #4ade80;
+            box-shadow: 0 0 8px #4ade80;
+            transition: 0.3s;
+        }
+        .sync-dot.syncing { background: #fbbf24; box-shadow: 0 0 8px #fbbf24; }
+        .sync-dot.offline { background: #ef4444; box-shadow: 0 0 8px #ef4444; }
 
         .corner-timer {
             pointer-events: auto;
@@ -168,7 +195,6 @@
         .t-val { font-size: 14px; font-weight: 800; color: var(--gold); line-height: 1; }
         .t-lbl { font-size: 7.5px; color: #94a3b8; text-transform: uppercase; }
 
-        /* ====== КОНТЕЙНЕРЫ ЭКРАНОВ ====== */
         .screen {
             display: none;
             width: 100%; max-width: 1280px;
@@ -194,7 +220,6 @@
             padding: 28px;
         }
 
-        /* ====== ЭКРАН 1: ВХОД ====== */
         #screen-login {
             min-height: 92dvh;
             align-items: center;
@@ -285,7 +310,6 @@
             border-radius: 12px; font-size: 13px; margin-bottom: 14px;
         }
 
-        /* ====== ЭКРАН 2: ПРОФИЛЬ ====== */
         #screen-profile { gap: 24px; align-items: flex-start; }
 
         .col-left { flex: 1.25; width: 100%; display: flex; flex-direction: column; gap: 24px; }
@@ -329,7 +353,6 @@
         }
         .save-toast { font-size: 13px; color: #4ade80; margin-left: 10px; display: none; font-weight: 600; }
 
-        /* Вишлист */
         .wish-add-bar { display: flex; gap: 10px; margin-bottom: 18px; flex-wrap: wrap; }
         .wish-text-in {
             flex: 1; min-width: 180px; padding: 12px 14px;
@@ -366,7 +389,6 @@
             display: flex; align-items: center; justify-content: center;
         }
 
-        /* ====== ПЕРСОНАЛЬНАЯ 3D ЕЛКА И УЛЬТРА-3D ГЛОБУСЫ С НИТКОЙ ====== */
         .tree-letters-layout {
             display: grid;
             grid-template-columns: 1.05fr 1fr;
@@ -390,7 +412,6 @@
             filter: drop-shadow(0 20px 30px rgba(0,0,0,0.8));
         }
 
-        /* Ультра-3D шар-глобус с ниткой и кольцом подвеса */
         .globe-ornament {
             position: absolute;
             width: 46px; height: 46px;
@@ -401,20 +422,17 @@
             justify-content: center;
             color: #fff;
             font-size: 15px;
-            /* Глубокий 3D стеклянный объем: внешняя тень, внутренняя глубина, нижний рефлекс и верхний свет */
             box-shadow: 
                 0 12px 20px rgba(0, 0, 0, 0.75),
                 inset -8px -10px 16px rgba(0, 0, 0, 0.65),
                 inset 5px 5px 12px rgba(255, 255, 255, 0.65),
                 inset 0 -3px 6px rgba(255, 255, 255, 0.35);
-            /* Точка качания находится вверху нитки! */
             transform-origin: 50% -22px;
             transition: transform 0.25s cubic-bezier(0.2, 0.9, 0.3, 1.3), filter 0.25s;
             z-index: 6;
             animation: pendulumSwing 3.4s ease-in-out infinite alternate;
         }
 
-        /* Нитка, идущая от ветки к шарику */
         .globe-string {
             position: absolute;
             top: -24px;
@@ -427,7 +445,6 @@
             pointer-events: none;
             z-index: -1;
         }
-        /* Узелок/петелька на колпачке */
         .globe-string::after {
             content: '';
             position: absolute;
@@ -438,7 +455,6 @@
             border-radius: 50%;
         }
 
-        /* 3D металлический рифленый колпачок шара */
         .globe-ornament::before {
             content: '';
             position: absolute;
@@ -450,7 +466,6 @@
             box-shadow: 0 2px 4px rgba(0,0,0,0.6);
         }
 
-        /* Стеклянный 3D блик на боку глобуса */
         .globe-ornament::after {
             content: '';
             position: absolute;
@@ -488,7 +503,6 @@
             100% { transform: rotate(5deg); }
         }
 
-        /* 3D сферические расцветки шаров */
         .orb-red    { background: radial-gradient(circle at 30% 28%, #ffb3c1 0%, #ff4d5a 22%, #d90429 62%, #4a040a 100%); }
         .orb-gold   { background: radial-gradient(circle at 30% 28%, #ffffff 0%, #fde047 22%, #d97706 64%, #451a03 100%); }
         .orb-blue   { background: radial-gradient(circle at 30% 28%, #e0f2fe 0%, #38bdf8 22%, #0369a1 64%, #082f49 100%); }
@@ -514,7 +528,6 @@
             box-shadow: 0 0 14px rgba(255,255,255,0.75), inset 3px 3px 6px rgba(255,255,255,0.6);
         }
 
-        /* ====== 3D КОРОБКА ПОДАРКА ====== */
         .gift-stage { display: flex; flex-direction: column; align-items: center; text-align: center; padding: 10px 5px; }
         .svg-gift-container {
             width: 220px; height: 230px; margin: 12px auto 16px;
@@ -565,7 +578,6 @@
         }
         .target-info-row strong { display: block; color: var(--gold); font-size: 11.5px; text-transform: uppercase; margin-bottom: 3px; }
 
-        /* ====== МОДАЛЬНОЕ ОКНО ДЛЯ СЕКРЕТНЫХ ПИСЕМ ====== */
         .letter-modal-backdrop {
             position: fixed;
             top: 0; left: 0;
@@ -633,18 +645,18 @@
             white-space: pre-wrap;
         }
 
-        /* ====== АДАПТАЦИЯ ПОД МОБИЛЬНЫЕ ТЕЛЕФОНЫ ====== */
         @media (max-width: 960px) {
             #screen-profile { flex-direction: column; }
             .tree-letters-layout { grid-template-columns: 1fr; }
         }
 
         @media (max-width: 600px) {
-            .top-hud-bar { top: 28px; padding: 0 12px; }
-            .corner-timer { padding: 5px 10px; gap: 6px; }
-            .timer-caption { font-size: 8px; padding-right: 6px; }
-            .t-val { font-size: 13px; }
-            .logout-btn { padding: 6px 12px; font-size: 12px; }
+            .top-hud-bar { top: 28px; padding: 0 10px; }
+            .corner-timer { padding: 5px 9px; gap: 6px; }
+            .timer-caption { font-size: 7.5px; padding-right: 5px; }
+            .t-val { font-size: 12.5px; }
+            .logout-btn { padding: 6px 10px; font-size: 11.5px; }
+            .sync-badge { padding: 6px 9px; font-size: 10px; }
 
             .moon-3d { width: 65px; height: 65px; top: 70px; left: 4%; }
             .santa-sleigh-track { width: 290px; top: 75px; }
@@ -670,7 +682,6 @@
     <canvas id="snow-canvas"></canvas>
     <div class="moon-3d"></div>
 
-    <!-- 1. 3D САНИ САНТЫ И ОЛЕНИ -->
     <div class="santa-sleigh-track">
         <svg viewBox="0 0 600 190" fill="none" xmlns="http://www.w3.org/2000/svg">
             <defs>
@@ -763,7 +774,6 @@
             <path d="M252 82 Q 320 96, 388 76" stroke="url(#gold3D)" stroke-width="2.5" fill="none"/>
             <path d="M252 82 Q 380 104, 502 68" stroke="url(#gold3D)" stroke-width="2" fill="none"/>
 
-            <!-- ОЛЕНЬ 1 -->
             <g transform="translate(345, 34)">
                 <g class="deer-leg leg-back-far">
                     <path d="M18 52 L 12 68 L 4 82" stroke="url(#deerFarLeg)" stroke-width="5.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
@@ -794,7 +804,6 @@
                 <circle cx="66" cy="43" r="3.5" fill="#fde047"/>
             </g>
 
-            <!-- ОЛЕНЬ 2 (РУДОЛЬФ) -->
             <g transform="translate(462, 22)">
                 <g class="deer-leg leg-back-near">
                     <path d="M18 52 L 12 68 L 4 82" stroke="url(#deerFarLeg)" stroke-width="5.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
@@ -828,7 +837,6 @@
         </svg>
     </div>
 
-    <!-- 2. 3D ЗИМНИЙ ПЕЙЗАЖ ВНИЗУ -->
     <svg class="winter-landscape-3d" viewBox="0 0 1440 250" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
         <defs>
             <linearGradient id="hillBack3D" x1="0" y1="0" x2="0" y2="1">
@@ -871,7 +879,6 @@
         <path d="M0 250 L0 205 Q 360 165, 740 205 T 1440 190 L 1440 250 Z" fill="url(#hillFront3D)"/>
     </svg>
 
-    <!-- 3. ГИРЛЯНДА СВЕРХУ -->
     <div class="garland-wrap">
         <svg class="garland-svg" viewBox="0 0 1440 65" preserveAspectRatio="none">
             <defs>
@@ -899,11 +906,16 @@
         </svg>
     </div>
 
-    <!-- АДАПТИВНЫЙ ВЕРХНИЙ БАР -->
     <div class="top-hud-bar">
-        <button class="logout-btn" id="logoutBtn" onclick="logout()">
-            <i class="fa-solid fa-right-from-bracket"></i> Ieșire
-        </button>
+        <div class="hud-left-group">
+            <button class="logout-btn" id="logoutBtn" onclick="logout()">
+                <i class="fa-solid fa-right-from-bracket"></i> Ieșire
+            </button>
+            <div class="sync-badge" title="Sincronizare Firebase în timp real">
+                <span class="sync-dot" id="syncDot"></span>
+                <span id="syncText">Cloud Sync</span>
+            </div>
+        </div>
 
         <div class="corner-timer">
             <div class="timer-caption">Până pe<br>7 Ian 2027</div>
@@ -917,7 +929,6 @@
         </div>
     </div>
 
-    <!-- ================= ЭКРАН 1: ВХОД И 3D ГЛОБУС ================= -->
     <section id="screen-login" class="screen active">
         <div class="login-card glass-card">
             
@@ -953,7 +964,7 @@
                             <rect x="36" y="16" width="18" height="26" fill="#5c1c07"/>
                             <rect x="38" y="2" width="7" height="14" fill="#451a03"/>
                             <path d="M-4 18 L 18 0 L 42 18 Q 18 22, -4 18 Z" fill="#ffffff"/>
-                            <path d="M18 0 L 42 18 L 58 16 L 36 0 Z" fill="#dbeafe"/>
+                            <path d="M18 0 L 42 18 L 58 16 L 36 0 Z" fill="url(#dbeafe)"/>
                             <rect x="12" y="20" width="14" height="14" rx="2" fill="#fef08a" stroke="#451a03" stroke-width="1.5"/>
                             <line x1="19" y1="20" x2="19" y2="34" stroke="#451a03" stroke-width="1.5"/>
                             <line x1="12" y1="27" x2="26" y2="27" stroke="#451a03" stroke-width="1.5"/>
@@ -1038,39 +1049,37 @@
                 </div>
             </div>
 
-            <button class="btn-festive" onclick="handleLogin()">
+            <button class="btn-festive" id="loginBtn" onclick="handleLogin()">
                 <i class="fa-solid fa-wand-magic-sparkles"></i> Intră în Profil
             </button>
         </div>
     </section>
 
-    <!-- ================= ЭКРАН 2: ПРОФИЛЬ УЧАСТНИКА ================= -->
     <section id="screen-profile" class="screen">
         
         <div class="col-left">
-            <!-- Блок 1: Анкета о себе -->
             <div class="glass-card">
                 <div class="section-header">
                     <h2 id="profileGreeting">Salut!</h2>
-                    <span style="font-size: 11.5px; color:#94a3b8;"><i class="fa-solid fa-user-secret"></i> Vizibil pentru Santa al tău</span>
+                    <span style="font-size: 11.5px; color:#94a3b8;"><i class="fa-solid fa-cloud"></i> Salvat în Cloud</span>
                 </div>
 
                 <div class="bio-grid">
                     <div class="bio-field">
                         <label><i class="fa-solid fa-palette"></i> Culoare Preferată:</label>
-                        <input type="text" id="bioColor" class="bio-input" placeholder="Ex: Negru, Verde smarald, Alb...">
+                        <input type="text" id="bioColor" class="bio-input" placeholder="">
                     </div>
                     <div class="bio-field">
                         <label><i class="fa-solid fa-heart"></i> Chestii preferate (show-uri, hobby-uri, etc.):</label>
-                        <input type="text" id="bioHobbies" class="bio-input" placeholder="Ex: Gaming, seriale, desen, fitness...">
+                        <input type="text" id="bioHobbies" class="bio-input" placeholder="">
                     </div>
                     <div class="bio-field full">
                         <label><i class="fa-solid fa-gift"></i> Ce vreau să primesc:</label>
-                        <textarea id="bioWant" class="bio-textarea" placeholder="Descrie pe scurt ce ți-ar aduce zâmbetul pe buze..."></textarea>
+                        <textarea id="bioWant" class="bio-textarea" placeholder=""></textarea>
                     </div>
                     <div class="bio-field full">
                         <label><i class="fa-solid fa-ban"></i> Ce nu vreau să primesc:</label>
-                        <textarea id="bioDontWant" class="bio-textarea" placeholder="Ex: Parfumuri puternice, haine fără mărime..."></textarea>
+                        <textarea id="bioDontWant" class="bio-textarea" placeholder=""></textarea>
                     </div>
                 </div>
 
@@ -1078,11 +1087,10 @@
                     <button class="btn-save-bio" onclick="saveBio()">
                         <i class="fa-solid fa-floppy-disk"></i> Salvează Informațiile
                     </button>
-                    <span class="save-toast" id="saveToast"><i class="fa-solid fa-check"></i> Salvat cu succes!</span>
+                    <span class="save-toast" id="saveToast"><i class="fa-solid fa-check"></i> Salvat în Cloud!</span>
                 </div>
             </div>
 
-            <!-- Блок 2: Вишлист с фото -->
             <div class="glass-card">
                 <div class="section-header">
                     <h2>Wishlist-ul Meu 🎁</h2>
@@ -1104,7 +1112,6 @@
                 <div class="wishlist-items-grid" id="myWishlistGrid"></div>
             </div>
 
-            <!-- Блок 3: 3D ЕЛКА С ГРАНЕНОЙ 3D ЗВЕЗДОЙ И ГЛОБУСАМИ НА НИТКАХ -->
             <div class="glass-card">
                 <div class="section-header">
                     <h2>Bradul cu Scrisori 🎄</h2>
@@ -1114,7 +1121,6 @@
                 </div>
 
                 <div class="tree-letters-layout">
-                    <!-- Моя 3D Елка с висящими глобусами-письмами -->
                     <div>
                         <p id="myGlobesHint" style="font-size: 12.5px; color: #cbd5e1; text-align: center; margin-bottom: 8px;">
                             Globurile tale (<span id="myGlobesCount">0</span>).
@@ -1122,7 +1128,6 @@
                         <div class="my-tree-stage" id="myTreeStage">
                             <svg class="my-tree-svg" viewBox="0 0 290 365" xmlns="http://www.w3.org/2000/svg">
                                 <defs>
-                                    <!-- Ультра-объемные 3D градиенты хвои с глубоким боковым светом и рефлексом -->
                                     <radialGradient id="pine3DTierLight" cx="30%" cy="18%" r="82%">
                                         <stop offset="0%" stop-color="#a7f3d0"/>
                                         <stop offset="22%" stop-color="#34d399"/>
@@ -1143,12 +1148,10 @@
                                         <stop offset="100%" stop-color="#022c22" stop-opacity="0"/>
                                     </linearGradient>
 
-                                    <!-- Глубокая 3D тень между ярусами -->
                                     <filter id="tierShadow3D" x="-18%" y="-12%" width="136%" height="140%">
                                         <feDropShadow dx="0" dy="10" stdDeviation="6" flood-color="#000a07" flood-opacity="0.82"/>
                                     </filter>
 
-                                    <!-- 3D Снежные шапки на ветках -->
                                     <linearGradient id="snow3DPuff" x1="0" y1="0" x2="0" y2="1">
                                         <stop offset="0%" stop-color="#ffffff"/>
                                         <stop offset="55%" stop-color="#e0f2fe"/>
@@ -1156,7 +1159,6 @@
                                         <stop offset="100%" stop-color="#0284c7"/>
                                     </linearGradient>
 
-                                    <!-- Градиенты для Граненой 3D Звезды (Светлая, Средняя и Темная грани золота) -->
                                     <linearGradient id="starFacetBright" x1="0" y1="0" x2="1" y2="1">
                                         <stop offset="0%" stop-color="#ffffff"/>
                                         <stop offset="35%" stop-color="#fef08a"/>
@@ -1177,11 +1179,9 @@
                                     </filter>
                                 </defs>
 
-                                <!-- Тень и снежное основание под 3D кадкой -->
                                 <ellipse cx="145" cy="346" rx="100" ry="13" fill="rgba(0,0,0,0.72)"/>
                                 <ellipse cx="145" cy="343" rx="80" ry="9" fill="url(#snow3DPuff)" opacity="0.4"/>
 
-                                <!-- Рельефный 3D ствол с корой и деревянная кадка с золотыми кольцами -->
                                 <rect x="128" y="278" width="34" height="42" rx="4" fill="url(#trunk3D)"/>
                                 <path d="M135 280 C 133 292, 136 305, 134 316 M148 280 C 150 294, 147 306, 149 316" stroke="#1c0a00" stroke-width="2.5" stroke-linecap="round" fill="none"/>
                                 <path d="M100 306 L190 306 L177 346 C 177 351, 113 351, 113 346 Z" fill="url(#mahogany3DBase)" stroke="url(#brass3D)" stroke-width="2"/>
@@ -1189,43 +1189,17 @@
                                 <path d="M98 306 Q 145 315, 192 306" stroke="url(#brass3D)" stroke-width="5.5" fill="none" stroke-linecap="round"/>
                                 <path d="M106 328 Q 145 336, 184 328" stroke="url(#brass3D)" stroke-width="4" fill="none"/>
 
-                                <!-- ===== ЯРУС 1 (НИЖНИЙ, МАССИВНЫЕ 3D ЛАПЫ ХВОИ) ===== -->
                                 <g filter="url(#tierShadow3D)">
-                                    <path d="M145 170 
-                                             C 108 214, 58 254, 18 286 
-                                             L 44 280 L 32 298 
-                                             Q 62 304, 80 288 
-                                             L 74 304 
-                                             Q 108 310, 126 292 
-                                             L 145 310 L 164 292 
-                                             Q 182 310, 216 304 
-                                             L 210 288 
-                                             Q 228 304, 258 298 
-                                             L 246 280 L 272 286 
-                                             C 232 254, 182 214, 145 170 Z" fill="url(#pine3DTierDeep)"/>
-                                    <!-- Объемные пучки иголок (левая освещенная сторона и ребра) -->
+                                    <path d="M145 170 C 108 214, 58 254, 18 286 L 44 280 L 32 298 Q 62 304, 80 288 L 74 304 Q 108 310, 126 292 L 145 310 L 164 292 Q 182 310, 216 304 L 210 288 Q 228 304, 258 298 L 246 280 L 272 286 C 232 254, 182 214, 145 170 Z" fill="url(#pine3DTierDeep)"/>
                                     <path d="M145 182 C 115 225, 75 262, 36 292 Q 72 288, 95 270 Q 90 292, 118 288 Q 132 275, 145 304 Z" fill="url(#branchHighlight3D)"/>
                                     <path d="M145 195 L 62 282 M145 202 L 96 290 M145 205 L 128 292 M145 205 L 162 292 M145 202 L 194 290 M145 195 L 228 282" stroke="#6ee7b7" stroke-width="2.2" stroke-dasharray="6 4" stroke-linecap="round" opacity="0.4"/>
-                                    <!-- 3D Снежные шапки -->
                                     <path d="M32 298 Q 56 286, 80 288 Q 60 304, 32 298 Z" fill="url(#snow3DPuff)"/>
                                     <path d="M126 292 L 145 309 L 164 292 Q 145 299, 126 292 Z" fill="url(#snow3DPuff)"/>
                                     <path d="M210 288 Q 234 286, 258 298 Q 230 304, 210 288 Z" fill="url(#snow3DPuff)"/>
                                 </g>
 
-                                <!-- ===== ЯРУС 2 ===== -->
                                 <g filter="url(#tierShadow3D)">
-                                    <path d="M145 124 
-                                             C 112 165, 68 202, 34 234 
-                                             L 58 228 L 46 246 
-                                             Q 76 250, 94 235 
-                                             L 90 250 
-                                             Q 118 256, 132 240 
-                                             L 145 256 L 158 240 
-                                             Q 172 256, 200 250 
-                                             L 196 235 
-                                             Q 214 250, 244 246 
-                                             L 232 228 L 256 234 
-                                             C 222 202, 178 165, 145 124 Z" fill="url(#pine3DTierLight)"/>
+                                    <path d="M145 124 C 112 165, 68 202, 34 234 L 58 228 L 46 246 Q 76 250, 94 235 L 90 250 Q 118 256, 132 240 L 145 256 L 158 240 Q 172 256, 200 250 L 196 235 Q 214 250, 244 246 L 232 228 L 256 234 C 222 202, 178 165, 145 124 Z" fill="url(#pine3DTierLight)"/>
                                     <path d="M145 135 C 120 174, 84 208, 50 240 Q 82 236, 102 222 Q 100 240, 126 238 L 145 250 Z" fill="url(#branchHighlight3D)"/>
                                     <path d="M145 148 L 76 230 M145 154 L 112 238 M145 154 L 178 238 M145 148 L 214 230" stroke="#a7f3d0" stroke-width="2.2" stroke-dasharray="5 4" stroke-linecap="round" opacity="0.45"/>
                                     <path d="M46 246 Q 70 235, 94 235 Q 74 250, 46 246 Z" fill="url(#snow3DPuff)"/>
@@ -1233,53 +1207,29 @@
                                     <path d="M196 235 Q 220 235, 244 246 Q 216 250, 196 235 Z" fill="url(#snow3DPuff)"/>
                                 </g>
 
-                                <!-- ===== ЯРУС 3 ===== -->
                                 <g filter="url(#tierShadow3D)">
-                                    <path d="M145 80 
-                                             C 116 116, 82 148, 52 178 
-                                             L 74 174 L 64 190 
-                                             Q 92 194, 108 180 
-                                             L 106 194 
-                                             Q 128 198, 145 184 
-                                             Q 162 198, 184 194 
-                                             L 182 180 
-                                             Q 198 194, 226 190 
-                                             L 216 174 L 238 178 
-                                             C 208 148, 174 116, 145 80 Z" fill="url(#pine3DTierDeep)"/>
+                                    <path d="M145 80 C 116 116, 82 148, 52 178 L 74 174 L 64 190 Q 92 194, 108 180 L 106 194 Q 128 198, 145 184 Q 162 198, 184 194 L 182 180 Q 198 194, 226 190 L 216 174 L 238 178 C 208 148, 174 116, 145 80 Z" fill="url(#pine3DTierDeep)"/>
                                     <path d="M145 90 C 124 124, 94 154, 66 184 Q 96 180, 114 168 L 145 184 Z" fill="url(#branchHighlight3D)"/>
                                     <path d="M145 102 L 90 174 M145 106 L 126 180 M145 106 L 164 180 M145 102 L 200 174" stroke="#6ee7b7" stroke-width="2" stroke-dasharray="5 4" stroke-linecap="round" opacity="0.45"/>
                                     <path d="M64 190 Q 86 180, 108 180 Q 88 194, 64 190 Z" fill="url(#snow3DPuff)"/>
                                     <path d="M182 180 Q 204 180, 226 190 Q 202 194, 182 180 Z" fill="url(#snow3DPuff)"/>
                                 </g>
 
-                                <!-- ===== ЯРУС 4 ===== -->
                                 <g filter="url(#tierShadow3D)">
-                                    <path d="M145 44 
-                                             C 122 76, 96 104, 74 128 
-                                             L 92 124 L 84 138 
-                                             Q 110 142, 124 130 
-                                             L 145 142 L 166 130 
-                                             Q 180 142, 206 138 
-                                             L 198 124 L 216 128 
-                                             C 194 104, 168 76, 145 44 Z" fill="url(#pine3DTierLight)"/>
+                                    <path d="M145 44 C 122 76, 96 104, 74 128 L 92 124 L 84 138 Q 110 142, 124 130 L 145 142 L 166 130 Q 180 142, 206 138 L 198 124 L 216 128 C 194 104, 168 76, 145 44 Z" fill="url(#pine3DTierLight)"/>
                                     <path d="M145 52 C 128 82, 106 108, 86 132 Q 112 128, 145 138 Z" fill="url(#branchHighlight3D)"/>
                                     <path d="M145 62 L 102 124 M145 66 L 145 130 M145 62 L 188 124" stroke="#d1fae5" stroke-width="2" stroke-dasharray="4 4" stroke-linecap="round" opacity="0.5"/>
                                     <path d="M84 138 Q 104 128, 124 130 Q 106 141, 84 138 Z" fill="url(#snow3DPuff)"/>
                                     <path d="M166 130 Q 186 128, 206 138 Q 184 141, 166 130 Z" fill="url(#snow3DPuff)"/>
                                 </g>
 
-                                <!-- ===== ЯРУС 5 (ВЕРХУШКА) ===== -->
                                 <g filter="url(#tierShadow3D)">
-                                    <path d="M145 18 
-                                             C 128 44, 110 66, 94 88 
-                                             L 114 84 L 124 94 L 145 86 L 166 94 L 176 84 L 196 88 
-                                             C 180 66, 162 44, 145 18 Z" fill="url(#pine3DTierDeep)"/>
+                                    <path d="M145 18 C 128 44, 110 66, 94 88 L 114 84 L 124 94 L 145 86 L 166 94 L 176 84 L 196 88 C 180 66, 162 44, 145 18 Z" fill="url(#pine3DTierDeep)"/>
                                     <path d="M145 24 L 112 82 Q 130 88, 145 84 Z" fill="url(#branchHighlight3D)"/>
                                     <path d="M94 88 Q 110 82, 124 94 Q 106 92, 94 88 Z" fill="url(#snow3DPuff)"/>
                                     <path d="M166 94 Q 180 82, 196 88 Q 184 92, 166 94 Z" fill="url(#snow3DPuff)"/>
                                 </g>
 
-                                <!-- СВЕТЯЩАЯСЯ ГИРЛЯНДА НА ЕЛКЕ -->
                                 <path d="M108 78 Q 145 98, 182 80" stroke="#fef08a" stroke-width="2" stroke-dasharray="3 5" fill="none" opacity="0.85"/>
                                 <path d="M86 126 Q 145 154, 204 124" stroke="#fef08a" stroke-width="2.2" stroke-dasharray="3 5" fill="none" opacity="0.85"/>
                                 <path d="M64 176 Q 145 212, 226 174" stroke="#fef08a" stroke-width="2.5" stroke-dasharray="4 6" fill="none" opacity="0.85"/>
@@ -1298,37 +1248,27 @@
                                 <circle class="bulb r" cx="146" cy="252" r="4.5" fill="url(#bulbR)"/>
                                 <circle class="bulb y" cx="212" cy="240" r="4.5" fill="url(#bulbY)"/>
 
-                                <!-- ===== НАСТОЯЩАЯ ГРАНЕНАЯ 3D ЗВЕЗДА НА ВЕРХУШКЕ (10 ПОЛИГОНАЛЬНЫХ ГРАНЕЙ) ===== -->
                                 <g filter="url(#starGlow3D)">
-                                    <!-- Верхний луч (левая светлая и правая теневая грань) -->
                                     <polygon points="145,22 145,-6 137,12" fill="url(#starFacetBright)"/>
                                     <polygon points="145,22 145,-6 153,12" fill="url(#starFacetDark)"/>
-                                    <!-- Правый верхний луч -->
                                     <polygon points="145,22 153,12 172,13" fill="url(#starFacetBright)"/>
                                     <polygon points="145,22 172,13 157,25" fill="url(#starFacetDark)"/>
-                                    <!-- Правый нижний луч -->
                                     <polygon points="145,22 157,25 163,43" fill="url(#starFacetMid)"/>
                                     <polygon points="145,22 163,43 145,32" fill="url(#starFacetDark)"/>
-                                    <!-- Левый нижний луч -->
                                     <polygon points="145,22 145,32 127,43" fill="url(#starFacetMid)"/>
                                     <polygon points="145,22 127,43 133,25" fill="url(#starFacetBright)"/>
-                                    <!-- Левый верхний луч -->
                                     <polygon points="145,22 133,25 118,13" fill="url(#starFacetMid)"/>
                                     <polygon points="145,22 118,13 137,12" fill="url(#starFacetBright)"/>
-                                    <!-- Ребра жесткости кристалла звезды -->
                                     <path d="M145,-6 L145,32 M118,13 L157,25 M172,13 L133,25 M127,43 L153,12 M163,43 L137,12" stroke="rgba(255,255,255,0.55)" stroke-width="0.7" fill="none"/>
-                                    <!-- Центральный 3D драгоценный камень внутри звезды -->
                                     <circle cx="145" cy="22" r="4.5" fill="url(#bulbR)" stroke="#fef08a" stroke-width="1"/>
                                     <circle cx="143.5" cy="20.5" r="1.3" fill="#ffffff"/>
                                 </g>
                             </svg>
 
-                            <!-- Слой для 3D глобусов с нитками -->
                             <div id="treeOrnamentsLayer"></div>
                         </div>
                     </div>
 
-                    <!-- Форма отправки глобуса с письмом другу (Без своей елки и максимум 1 шар на каждого друга) -->
                     <div style="background: rgba(4, 10, 22, 0.45); padding: 18px; border-radius: 18px; border: 1px solid rgba(255,255,255,0.08);">
                         <h3 style="font-size: 16px; color: var(--gold); margin-bottom: 12px;">
                             <i class="fa-solid fa-paper-plane"></i> Trimite un Glob cu Scrisoare
@@ -1364,14 +1304,13 @@
                             <i class="fa-solid fa-gift"></i> Agață Globul în Brad!
                         </button>
                         <div id="letterSentToast" style="display:none; color:#4ade80; font-size:12.5px; font-weight:600; margin-top:10px; text-align:center;">
-                            <i class="fa-solid fa-check-circle"></i> Globul cu scrisoare a fost agățat în brad!
+                            <i class="fa-solid fa-check-circle"></i> Globul cu scrisoare a fost salvat în Cloud!
                         </div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- Правая колонка: 3D Подарок и Подопечный -->
         <div class="col-right">
             <div class="glass-card gift-stage">
                 <div class="section-header" style="width:100%; justify-content:center;">
@@ -1381,7 +1320,6 @@
                     Apasă pe cutia de cadou fermecată pentru a descoperi persoana extrasă!
                 </p>
 
-                <!-- Объемный 3D Подарок -->
                 <div class="svg-gift-container" id="svgGiftBox" onclick="revealTarget()">
                     <svg viewBox="0 0 240 250" xmlns="http://www.w3.org/2000/svg">
                         <defs>
@@ -1415,7 +1353,6 @@
                     </svg>
                 </div>
 
-                <!-- Карточка подопечного -->
                 <div class="target-reveal-box" id="targetRevealBox">
                     <div class="target-badge">
                         <span>Tu ești Secret Santa pentru:</span>
@@ -1452,7 +1389,6 @@
 
     </section>
 
-    <!-- МОДАЛЬНОЕ ОКНО ПРОСМОТРА ПИСЬМА В ШАРЕ (ЗАБЛОКИРОВАНО ДО 1 ЯНВАРЯ 2027, 00:00) -->
     <div class="letter-modal-backdrop" id="letterModal" onclick="if(event.target===this) closeLetterModal()">
         <div class="letter-modal-card">
             <button class="modal-close-x" onclick="closeLetterModal()">&times;</button>
@@ -1464,110 +1400,76 @@
             </h3>
             <p id="modalLetterSub" style="font-size:13.5px; color:#cbd5e1; line-height:1.5;"></p>
 
-            <!-- Таймер до 1 января 00:00 (если еще закрыто) -->
             <div class="ny-countdown-box" id="modalNYTimerBox">
                 ⏳ Se deschide peste: <span id="nyTimerText">00z 00h 00m</span>
             </div>
 
-            <!-- Текст письма (показывается только после 1 января 2027 00:00) -->
             <div class="letter-paper" id="modalLetterContent" style="display:none;"></div>
         </div>
     </div>
 
     <script>
-        // ====== 1. БАЗА 12 УЧАСТНИКОВ (НОВАЯ ЖЕРЕБЬЕВКА С DIMA И TIM) ======
+        const FIREBASE_BASE_URL = "https://secretsanta-16a4a-default-rtdb.europe-west1.firebasedatabase.app";
+        const STORAGE_KEY = "secretSanta2027_DB_v7_cloud";
+
+        // Новая жеребьевка для 12 участников (Sanecika дарит подарок Vlada)
         const defaultUsers = {
             "sanecika": {
-                displayName: "Sanecika", pass: "2027", target: "dima",
-                bio: {
-                    color: "Negru / Albastru închis",
-                    hobbies: "Web design, gaming pe PC, antrenamente acasă",
-                    want: "Accesorii pentru PC sau ceva util pentru cameră",
-                    dontWant: "Suveniruri inutile care adună praf"
-                },
-                wishes: [{ title: "Suport cu încălzire pentru cană", img: "" }],
-                letters: []
+                displayName: "Sanecika", pass: "Santa2027#San", target: "vlada",
+                bio: { color: "", hobbies: "", want: "", dontWant: "" }, wishes: [], letters: []
             },
             "dima": {
-                displayName: "Dima", pass: "2027", target: "sabina",
-                bio: { color: "Negru / Albastru", hobbies: "Gaming, filme, sport, muzică", want: "Gadget util sau accesorii gaming", dontWant: "Suveniruri decorative" },
-                wishes: [],
-                letters: []
+                displayName: "Dima", pass: "Frost#Dim27", target: "sanecika",
+                bio: { color: "", hobbies: "", want: "", dontWant: "" }, wishes: [], letters: []
             },
             "sabina": {
-                displayName: "Sabina", pass: "2027", target: "tim",
-                bio: { color: "Roz pastel / Alb", hobbies: "Seriale, plimbări, fotografie", want: "Set îngrijire, lumânări parfumate", dontWant: "Dulciuri cu ciocolată neagră" },
-                wishes: [],
-                letters: []
+                displayName: "Sabina", pass: "Snow#Sab99", target: "dima",
+                bio: { color: "", hobbies: "", want: "", dontWant: "" }, wishes: [], letters: []
             },
             "tim": {
-                displayName: "Tim", pass: "2027", target: "vlada",
-                bio: { color: "Verde / Gri", hobbies: "Tehnologie, muzică, ieșiri cu prietenii", want: "Hanorac cool sau joc de societate", dontWant: "Căni simple" },
-                wishes: [],
-                letters: []
+                displayName: "Tim", pass: "Magic#Tim01", target: "sabina",
+                bio: { color: "", hobbies: "", want: "", dontWant: "" }, wishes: [], letters: []
             },
             "vlada": {
-                displayName: "Vlada", pass: "2027", target: "sorin",
-                bio: { color: "Bej / Auriu", hobbies: "Cărți, artă, călătorii", want: "Sketchbook calitativ, pătură pufoasă", dontWant: "Căni obișnuite" },
-                wishes: [],
-                letters: []
+                displayName: "Vlada", pass: "Star#Vla88", target: "tim",
+                bio: { color: "", hobbies: "", want: "", dontWant: "" }, wishes: [], letters: []
             },
             "sorin": {
-                displayName: "Sorin", pass: "2027", target: "dana",
-                bio: { color: "Verde / Negru", hobbies: "Sport, filme de acțiune, muzică", want: "Căști sau un hanorac comod", dontWant: "Parfumuri dulci" },
-                wishes: [],
-                letters: []
+                displayName: "Sorin", pass: "Deer#Sor55", target: "dana",
+                bio: { color: "", hobbies: "", want: "", dontWant: "" }, wishes: [], letters: []
             },
             "dana": {
-                displayName: "Dana", pass: "2027", target: "beniamin",
-                bio: { color: "Turcoaz", hobbies: "Pictură, filme, cafea", want: "Set pentru cafea sau produse de artă", dontWant: "Obiecte decorative mari" },
-                wishes: [],
-                letters: []
+                displayName: "Dana", pass: "Bell#Dan33", target: "beniamin",
+                bio: { color: "", hobbies: "", want: "", dontWant: "" }, wishes: [], letters: []
             },
             "beniamin": {
-                displayName: "Beniamin", pass: "2027", target: "evelina",
-                bio: { color: "Albastru", hobbies: "Jocuri de societate, tehnologie", want: "Board game sau gadget interesant", dontWant: "Șosete simple" },
-                wishes: [],
-                letters: []
+                displayName: "Beniamin", pass: "Gifts#Ben77", target: "evelina",
+                bio: { color: "", hobbies: "", want: "", dontWant: "" }, wishes: [], letters: []
             },
             "evelina": {
-                displayName: "Evelina", pass: "2027", target: "bogdan",
-                bio: { color: "Roșu / Alb", hobbies: "Dans, seriale, estetică", want: "Cutie cu dulciuri și luminițe ambientale", dontWant: "Ceaiuri amare" },
-                wishes: [],
-                letters: []
+                displayName: "Evelina", pass: "Cookie#Eve22", target: "bogdan",
+                bio: { color: "", hobbies: "", want: "", dontWant: "" }, wishes: [], letters: []
             },
             "bogdan": {
-                displayName: "Bogdan", pass: "2027", target: "daniela",
-                bio: { color: "Gri / Negru", hobbies: "Auto, gaming, filme", want: "Powerbank sau termos auto", dontWant: "Plușuri" },
-                wishes: [],
-                letters: []
+                displayName: "Bogdan", pass: "Candy#Bog44", target: "daniela",
+                bio: { color: "", hobbies: "", want: "", dontWant: "" }, wishes: [], letters: []
             },
             "daniela": {
-                displayName: "Daniela", pass: "2027", target: "alina",
-                bio: { color: "Smarald / Auriu", hobbies: "Călătorii, muzică, fotografie", want: "Album foto sau eșarfă călduroasă", dontWant: "Cosmetice cu miros puternic" },
-                wishes: [],
-                letters: []
+                displayName: "Daniela", pass: "Wishes#Dan66", target: "alina",
+                bio: { color: "", hobbies: "", want: "", dontWant: "" }, wishes: [], letters: []
             },
             "alina": {
-                displayName: "Alina", pass: "2027", target: "sanecika",
-                bio: { color: "Mov / Liliac", hobbies: "Modă, muzică, gătit", want: "Set cosmetic sau bijuterie minimalistă", dontWant: "Agende datate" },
-                wishes: [],
-                letters: []
+                displayName: "Alina", pass: "Winter#Ali11", target: "sorin",
+                bio: { color: "", hobbies: "", want: "", dontWant: "" }, wishes: [], letters: []
             }
         };
 
-        const STORAGE_KEY = 'secretSanta2027_DB_v5';
-        let db = JSON.parse(localStorage.getItem(STORAGE_KEY)) || defaultUsers;
-        Object.keys(defaultUsers).forEach(k => {
-            if (!db[k]) db[k] = defaultUsers[k];
-            if (!Array.isArray(db[k].letters)) db[k].letters = [];
-        });
-
+        let db = JSON.parse(localStorage.getItem(STORAGE_KEY)) || JSON.parse(JSON.stringify(defaultUsers));
         let currentUserKey = null;
         let pendingPhotoBase64 = "";
         let selectedOrbColor = "orb-red";
+        let isTargetRevealed = false;
 
-        // 12 слотов для шаров на 5-ярусной 3D елке
         const treeSlots = [
             { top: "21%", left: "42%" },
             { top: "33%", left: "31%" },
@@ -1583,9 +1485,107 @@
             { top: "73%", left: "60%" }
         ];
 
-        function saveDB() {
-            localStorage.setItem(STORAGE_KEY, JSON.stringify(db));
+        function setSyncIndicator(state) {
+            const dot = document.getElementById('syncDot');
+            const txt = document.getElementById('syncText');
+            if (!dot || !txt) return;
+            dot.className = 'sync-dot';
+            if (state === 'syncing') {
+                dot.classList.add('syncing');
+                txt.innerText = 'Sincronizare...';
+            } else if (state === 'offline') {
+                dot.classList.add('offline');
+                txt.innerText = 'Mod Local';
+            } else {
+                txt.innerText = 'Cloud Activ';
+            }
         }
+
+        function normalizeDB(remoteData) {
+            const merged = {};
+            Object.keys(defaultUsers).forEach(k => {
+                const def = defaultUsers[k];
+                const rem = (remoteData && remoteData[k]) ? remoteData[k] : {};
+                merged[k] = {
+                    displayName: def.displayName,
+                    pass: rem.pass || def.pass,
+                    target: def.target,
+                    bio: {
+                        color: (rem.bio && rem.bio.color !== undefined) ? rem.bio.color : def.bio.color,
+                        hobbies: (rem.bio && rem.bio.hobbies !== undefined) ? rem.bio.hobbies : def.bio.hobbies,
+                        want: (rem.bio && rem.bio.want !== undefined) ? rem.bio.want : def.bio.want,
+                        dontWant: (rem.bio && rem.bio.dontWant !== undefined) ? rem.bio.dontWant : def.bio.dontWant
+                    },
+                    wishes: Array.isArray(rem.wishes) ? rem.wishes : (rem.wishes ? Object.values(rem.wishes) : []),
+                    letters: Array.isArray(rem.letters) ? rem.letters : (rem.letters ? Object.values(rem.letters) : [])
+                };
+            });
+            return merged;
+        }
+
+        async function syncFromCloud(quiet = false) {
+            if (!quiet) setSyncIndicator('syncing');
+            try {
+                const res = await fetch(`${FIREBASE_BASE_URL}/users.json`);
+                if (!res.ok) throw new Error("Firebase response error");
+                const remoteData = await res.json();
+
+                if (!remoteData) {
+                    await fetch(`${FIREBASE_BASE_URL}/users.json`, {
+                        method: 'PUT',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(defaultUsers)
+                    });
+                    db = JSON.parse(JSON.stringify(defaultUsers));
+                } else {
+                    let missingUsers = {};
+                    Object.keys(defaultUsers).forEach(k => {
+                        if (!remoteData[k]) missingUsers[k] = defaultUsers[k];
+                    });
+                    if (Object.keys(missingUsers).length > 0) {
+                        await fetch(`${FIREBASE_BASE_URL}/users.json`, {
+                            method: 'PATCH',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify(missingUsers)
+                        });
+                    }
+                    db = normalizeDB(remoteData);
+                }
+
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(db));
+                setSyncIndicator('online');
+
+                if (currentUserKey) {
+                    renderMyWishlist();
+                    renderMyTreeGlobes();
+                    populateRecipientSelect();
+                    if (isTargetRevealed) updateRevealedTargetInfo();
+                }
+            } catch (err) {
+                console.warn("Firebase sync warning:", err);
+                setSyncIndicator('offline');
+            }
+        }
+
+        async function syncUserToCloud(userKey) {
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(db));
+            setSyncIndicator('syncing');
+            try {
+                const res = await fetch(`${FIREBASE_BASE_URL}/users/${userKey}.json`, {
+                    method: 'PATCH',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(db[userKey])
+                });
+                if (!res.ok) throw new Error("Write error");
+                setSyncIndicator('online');
+            } catch (err) {
+                console.warn("Cloud write error:", err);
+                setSyncIndicator('offline');
+            }
+        }
+
+        syncFromCloud();
+        setInterval(() => syncFromCloud(true), 12000);
 
         function resetLetterForm() {
             document.getElementById('letterSenderName').value = '';
@@ -1597,15 +1597,20 @@
             if (dots[0]) dots[0].classList.add('selected');
         }
 
-        // ====== 2. АВТОРИЗАЦИЯ ======
-        function handleLogin() {
+        async function handleLogin() {
             const loginRaw = document.getElementById('loginInput').value.trim().toLowerCase();
             const passRaw = document.getElementById('passInput').value.trim();
             const errBox = document.getElementById('loginError');
+            const btn = document.getElementById('loginBtn');
+
+            btn.disabled = true;
+            await syncFromCloud(true);
+            btn.disabled = false;
 
             if (db[loginRaw] && db[loginRaw].pass === passRaw) {
                 errBox.style.display = 'none';
                 currentUserKey = loginRaw;
+                isTargetRevealed = false;
                 openProfileScreen();
                 window.scrollTo({ top: 0, behavior: 'smooth' });
             } else {
@@ -1645,6 +1650,7 @@
 
         function logout() {
             currentUserKey = null;
+            isTargetRevealed = false;
             document.getElementById('loginInput').value = '';
             document.getElementById('passInput').value = '';
             resetLetterForm();
@@ -1653,8 +1659,7 @@
             document.getElementById('logoutBtn').style.display = 'none';
         }
 
-        // ====== 3. СОХРАНЕНИЕ ДАННЫХ О СЕБЕ ======
-        function saveBio() {
+        async function saveBio() {
             if (!currentUserKey) return;
             db[currentUserKey].bio = {
                 color: document.getElementById('bioColor').value.trim(),
@@ -1662,26 +1667,44 @@
                 want: document.getElementById('bioWant').value.trim(),
                 dontWant: document.getElementById('bioDontWant').value.trim()
             };
-            saveDB();
+            await syncUserToCloud(currentUserKey);
 
             const toast = document.getElementById('saveToast');
             toast.style.display = 'inline';
             setTimeout(() => { toast.style.display = 'none'; }, 2500);
         }
 
-        // ====== 4. ВИШЛИСТ И ФОТО ======
         function previewSelectedPhoto(input) {
             const file = input.files[0];
             if (!file) return;
             const reader = new FileReader();
             reader.onload = function(e) {
-                pendingPhotoBase64 = e.target.result;
-                document.getElementById('photoLabelText').innerText = "Foto pregătită ✓";
+                const img = new Image();
+                img.onload = function() {
+                    const canvas = document.createElement('canvas');
+                    const maxDim = 600;
+                    let w = img.width;
+                    let h = img.height;
+                    if (w > h && w > maxDim) {
+                        h = Math.round(h * (maxDim / w));
+                        w = maxDim;
+                    } else if (h > maxDim) {
+                        w = Math.round(w * (maxDim / h));
+                        h = maxDim;
+                    }
+                    canvas.width = w;
+                    canvas.height = h;
+                    const c = canvas.getContext('2d');
+                    c.drawImage(img, 0, 0, w, h);
+                    pendingPhotoBase64 = canvas.toDataURL('image/jpeg', 0.75);
+                    document.getElementById('photoLabelText').innerText = "Foto pregătită ✓";
+                };
+                img.src = e.target.result;
             };
             reader.readAsDataURL(file);
         }
 
-        function addWishItem() {
+        async function addWishItem() {
             if (!currentUserKey) return;
             const titleIn = document.getElementById('wishTitleInput');
             const title = titleIn.value.trim();
@@ -1692,7 +1715,6 @@
                 title: title || "Idee de cadou 🎁",
                 img: pendingPhotoBase64
             });
-            saveDB();
 
             titleIn.value = '';
             pendingPhotoBase64 = "";
@@ -1700,17 +1722,18 @@
             document.getElementById('photoLabelText').innerText = "Adaugă Foto";
 
             renderMyWishlist();
+            await syncUserToCloud(currentUserKey);
         }
 
-        function deleteWishItem(idx) {
+        async function deleteWishItem(idx) {
             db[currentUserKey].wishes.splice(idx, 1);
-            saveDB();
             renderMyWishlist();
+            await syncUserToCloud(currentUserKey);
         }
 
         function renderMyWishlist() {
             const grid = document.getElementById('myWishlistGrid');
-            const wishes = db[currentUserKey].wishes;
+            const wishes = db[currentUserKey].wishes || [];
             grid.innerHTML = '';
 
             if (wishes.length === 0) {
@@ -1730,19 +1753,17 @@
             });
         }
 
-        // ====== 5. ПЕРСОНАЛЬНАЯ ЕЛКА И ЛИМИТ: 1 ШАР НА ЧУЖУЮ ЕЛКУ (БЕЗ СВОЕЙ ЕЛКИ) ======
         function populateRecipientSelect() {
             const sel = document.getElementById('letterRecipient');
             const sendBtn = document.getElementById('sendGlobeBtn');
+            const previousSelection = sel.value;
             sel.innerHTML = '';
 
             let availableCount = 0;
 
             Object.keys(db).forEach(key => {
-                // 1) Исключаем собственную елку (Bradul meu)
                 if (key === currentUserKey) return;
 
-                // 2) Проверяем, вешал ли уже текущий пользователь шар этому человеку
                 const recipientLetters = db[key].letters || [];
                 const alreadyPlaced = recipientLetters.some(l => l.senderKey === currentUserKey);
                 if (alreadyPlaced) return;
@@ -1764,6 +1785,9 @@
             } else {
                 sel.disabled = false;
                 sendBtn.disabled = false;
+                if (previousSelection && Array.from(sel.options).some(o => o.value === previousSelection)) {
+                    sel.value = previousSelection;
+                }
             }
         }
 
@@ -1773,13 +1797,21 @@
             selectedOrbColor = el.getAttribute('data-color');
         }
 
-        function sendGlobeLetter() {
+        async function sendGlobeLetter() {
             const toKey = document.getElementById('letterRecipient').value;
             if (!toKey || toKey === currentUserKey) return;
 
-            // Дополнительная защита от дублирования
-            const alreadySent = db[toKey].letters.some(l => l.senderKey === currentUserKey);
-            if (alreadySent) {
+            try {
+                const res = await fetch(`${FIREBASE_BASE_URL}/users/${toKey}/letters.json`);
+                if (res.ok) {
+                    const remoteLetters = await res.json();
+                    db[toKey].letters = Array.isArray(remoteLetters)
+                        ? remoteLetters
+                        : (remoteLetters ? Object.values(remoteLetters) : []);
+                }
+            } catch (e) {}
+
+            if (db[toKey].letters.some(l => l.senderKey === currentUserKey)) {
                 populateRecipientSelect();
                 return;
             }
@@ -1798,7 +1830,8 @@
                 color: selectedOrbColor,
                 text: msgText
             });
-            saveDB();
+
+            await syncUserToCloud(toKey);
 
             document.getElementById('letterSenderName').value = '';
             document.getElementById('letterMessageText').value = '';
@@ -1807,8 +1840,6 @@
             setTimeout(() => { toast.style.display = 'none'; }, 3000);
 
             confetti({ particleCount: 55, spread: 65, origin: { y: 0.7 } });
-
-            // Обновляем список доступных елок (выбранный друг сразу исчезает из списка)
             populateRecipientSelect();
         }
 
@@ -1891,8 +1922,34 @@
             if (el) el.innerText = `${d}z ${h}h ${m}m ${s}s`;
         }
 
-        // ====== 6. РАСПАКОВКА ПОДАРКА ======
-        function revealTarget() {
+        function updateRevealedTargetInfo() {
+            if (!currentUserKey) return;
+            const targetKey = db[currentUserKey].target;
+            const targetUser = db[targetKey];
+
+            document.getElementById('targetNameText').innerText = `${targetUser.displayName} ✨`;
+            document.getElementById('tColor').innerText = targetUser.bio.color || "Nu a completat încă";
+            document.getElementById('tHobbies').innerText = targetUser.bio.hobbies || "Nu a completat încă";
+            document.getElementById('tWant').innerText = targetUser.bio.want || "Nu a completat încă";
+            document.getElementById('tDontWant').innerText = targetUser.bio.dontWant || "Nu a completat încă";
+
+            const tGrid = document.getElementById('targetWishlistGrid');
+            tGrid.innerHTML = '';
+            if (!targetUser.wishes || targetUser.wishes.length === 0) {
+                tGrid.innerHTML = `<p style="color:#94a3b8; font-size:13px; grid-column:1/-1;">${targetUser.displayName} nu a încărcat încă poze în wishlist.</p>`;
+            } else {
+                targetUser.wishes.forEach(w => {
+                    tGrid.innerHTML += `
+                        <div class="wish-card">
+                            ${w.img ? `<img src="${w.img}" alt="Cadou">` : ''}
+                            <div class="wish-card-title">🎄 ${w.title}</div>
+                        </div>
+                    `;
+                });
+            }
+        }
+
+        async function revealTarget() {
             if (!currentUserKey) return;
             const giftBox = document.getElementById('svgGiftBox');
             if (giftBox.classList.contains('opening')) return;
@@ -1906,39 +1963,17 @@
                 colors: ['#e63946', '#ffb703', '#ffffff', '#2a9d8f']
             });
 
-            const targetKey = db[currentUserKey].target;
-            const targetUser = db[targetKey];
+            await syncFromCloud(true);
 
             setTimeout(() => {
                 giftBox.style.display = 'none';
                 document.getElementById('giftInstruction').style.display = 'none';
-                
-                document.getElementById('targetNameText').innerText = `${targetUser.displayName} ✨`;
-                document.getElementById('tColor').innerText = targetUser.bio.color || "Nu a completat încă";
-                document.getElementById('tHobbies').innerText = targetUser.bio.hobbies || "Nu a completat încă";
-                document.getElementById('tWant').innerText = targetUser.bio.want || "Nu a completat încă";
-                document.getElementById('tDontWant').innerText = targetUser.bio.dontWant || "Nu a completat încă";
-
-                const tGrid = document.getElementById('targetWishlistGrid');
-                tGrid.innerHTML = '';
-                if (!targetUser.wishes || targetUser.wishes.length === 0) {
-                    tGrid.innerHTML = `<p style="color:#94a3b8; font-size:13px; grid-column:1/-1;">${targetUser.displayName} nu a încărcat încă poze în wishlist.</p>`;
-                } else {
-                    targetUser.wishes.forEach(w => {
-                        tGrid.innerHTML += `
-                            <div class="wish-card">
-                                ${w.img ? `<img src="${w.img}" alt="Cadou">` : ''}
-                                <div class="wish-card-title">🎄 ${w.title}</div>
-                            </div>
-                        `;
-                    });
-                }
-
+                isTargetRevealed = true;
+                updateRevealedTargetInfo();
                 document.getElementById('targetRevealBox').style.display = 'block';
             }, 720);
         }
 
-        // ====== 7. ТАЙМЕРЫ ======
         function updateCountdown() {
             const targetDate = new Date("Jan 7, 2027 00:00:00").getTime();
             const now = Date.now();
@@ -1957,7 +1992,6 @@
         setInterval(updateCountdown, 1000);
         updateCountdown();
 
-        // ====== 8. СНЕГОПАД НА ФОНЕ ======
         const canvas = document.getElementById('snow-canvas');
         const ctx = canvas.getContext('2d');
         let flakes = [];
