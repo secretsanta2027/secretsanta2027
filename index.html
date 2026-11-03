@@ -31,6 +31,7 @@
             position: relative;
         }
 
+        /* ====== 1. СНЕГ И 3D ЛУНА ====== */
         #snow-canvas {
             position: fixed;
             top: 0; left: 0;
@@ -53,6 +54,7 @@
             pointer-events: none;
         }
 
+        /* ====== 2. 3D САНИ САНТЫ И ОЛЕНИ ====== */
         .santa-sleigh-track {
             position: fixed;
             top: 80px;
@@ -83,6 +85,7 @@
         @keyframes runBackNear  { 0% { transform: rotate(26deg); }  100% { transform: rotate(-26deg); } }
         @keyframes runBackFar   { 0% { transform: rotate(-22deg); } 100% { transform: rotate(28deg); } }
 
+        /* ====== 3. 3D ЗИМНИЙ ЛЕС ВНИЗУ ====== */
         .winter-landscape-3d {
             position: fixed;
             bottom: 0; left: 0;
@@ -92,6 +95,7 @@
             filter: drop-shadow(0 -10px 25px rgba(0,0,0,0.65));
         }
 
+        /* ====== 4. ВЕРХНЯЯ ГИРЛЯНДА И АДАПТИВНЫЙ TOP-BAR ====== */
         .garland-wrap {
             position: fixed;
             top: 0; left: 0;
@@ -110,6 +114,20 @@
         @keyframes twinkle {
             0% { opacity: 0.55; transform: scale(0.94); }
             100% { opacity: 1; transform: scale(1.1); }
+        }
+
+        /* Мерцание огоньков гирлянды на самой елке (без смещения координат) */
+        .tree-garland-light {
+            animation: garlandGlow 1.6s infinite alternate ease-in-out;
+        }
+        .tree-garland-light.d1 { animation-delay: 0s; }
+        .tree-garland-light.d2 { animation-delay: 0.4s; }
+        .tree-garland-light.d3 { animation-delay: 0.8s; }
+        .tree-garland-light.d4 { animation-delay: 1.2s; }
+
+        @keyframes garlandGlow {
+            0% { opacity: 0.45; filter: brightness(0.85); }
+            100% { opacity: 1; filter: brightness(1.35) drop-shadow(0 0 6px #fde047); }
         }
 
         .top-hud-bar {
@@ -195,6 +213,7 @@
         .t-val { font-size: 14px; font-weight: 800; color: var(--gold); line-height: 1; }
         .t-lbl { font-size: 7.5px; color: #94a3b8; text-transform: uppercase; }
 
+        /* ====== КОНТЕЙНЕРЫ ЭКРАНОВ ====== */
         .screen {
             display: none;
             width: 100%; max-width: 1280px;
@@ -220,6 +239,7 @@
             padding: 28px;
         }
 
+        /* ====== ЭКРАН 1: ВХОД ====== */
         #screen-login {
             min-height: 92dvh;
             align-items: center;
@@ -310,6 +330,7 @@
             border-radius: 12px; font-size: 13px; margin-bottom: 14px;
         }
 
+        /* ====== ЭКРАН 2: ПРОФИЛЬ ====== */
         #screen-profile { gap: 24px; align-items: flex-start; }
 
         .col-left { flex: 1.25; width: 100%; display: flex; flex-direction: column; gap: 24px; }
@@ -353,6 +374,7 @@
         }
         .save-toast { font-size: 13px; color: #4ade80; margin-left: 10px; display: none; font-weight: 600; }
 
+        /* Вишлист */
         .wish-add-bar { display: flex; gap: 10px; margin-bottom: 18px; flex-wrap: wrap; }
         .wish-text-in {
             flex: 1; min-width: 180px; padding: 12px 14px;
@@ -389,6 +411,7 @@
             display: flex; align-items: center; justify-content: center;
         }
 
+        /* ====== ПЕРСОНАЛЬНАЯ 3D ЕЛКА И УЛЬТРА-3D ГЛОБУСЫ С НИТКОЙ ====== */
         .tree-letters-layout {
             display: grid;
             grid-template-columns: 1.05fr 1fr;
@@ -528,6 +551,7 @@
             box-shadow: 0 0 14px rgba(255,255,255,0.75), inset 3px 3px 6px rgba(255,255,255,0.6);
         }
 
+        /* ====== 3D КОРОБКА ПОДАРКА ====== */
         .gift-stage { display: flex; flex-direction: column; align-items: center; text-align: center; padding: 10px 5px; }
         .svg-gift-container {
             width: 220px; height: 230px; margin: 12px auto 16px;
@@ -578,6 +602,7 @@
         }
         .target-info-row strong { display: block; color: var(--gold); font-size: 11.5px; text-transform: uppercase; margin-bottom: 3px; }
 
+        /* ====== МОДАЛЬНОЕ ОКНО ДЛЯ СЕКРЕТНЫХ ПИСЕМ ====== */
         .letter-modal-backdrop {
             position: fixed;
             top: 0; left: 0;
@@ -645,6 +670,7 @@
             white-space: pre-wrap;
         }
 
+        /* ====== АДАПТАЦИЯ ПОД МОБИЛЬНЫЕ ТЕЛЕФОНЫ ====== */
         @media (max-width: 960px) {
             #screen-profile { flex-direction: column; }
             .tree-letters-layout { grid-template-columns: 1fr; }
@@ -682,6 +708,7 @@
     <canvas id="snow-canvas"></canvas>
     <div class="moon-3d"></div>
 
+    <!-- 1. 3D САНИ САНТЫ И ОЛЕНИ -->
     <div class="santa-sleigh-track">
         <svg viewBox="0 0 600 190" fill="none" xmlns="http://www.w3.org/2000/svg">
             <defs>
@@ -774,6 +801,7 @@
             <path d="M252 82 Q 320 96, 388 76" stroke="url(#gold3D)" stroke-width="2.5" fill="none"/>
             <path d="M252 82 Q 380 104, 502 68" stroke="url(#gold3D)" stroke-width="2" fill="none"/>
 
+            <!-- ОЛЕНЬ 1 -->
             <g transform="translate(345, 34)">
                 <g class="deer-leg leg-back-far">
                     <path d="M18 52 L 12 68 L 4 82" stroke="url(#deerFarLeg)" stroke-width="5.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
@@ -804,6 +832,7 @@
                 <circle cx="66" cy="43" r="3.5" fill="#fde047"/>
             </g>
 
+            <!-- ОЛЕНЬ 2 (РУДОЛЬФ) -->
             <g transform="translate(462, 22)">
                 <g class="deer-leg leg-back-near">
                     <path d="M18 52 L 12 68 L 4 82" stroke="url(#deerFarLeg)" stroke-width="5.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
@@ -837,6 +866,7 @@
         </svg>
     </div>
 
+    <!-- 2. 3D ЗИМНИЙ ПЕЙЗАЖ ВНИЗУ -->
     <svg class="winter-landscape-3d" viewBox="0 0 1440 250" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
         <defs>
             <linearGradient id="hillBack3D" x1="0" y1="0" x2="0" y2="1">
@@ -879,6 +909,7 @@
         <path d="M0 250 L0 205 Q 360 165, 740 205 T 1440 190 L 1440 250 Z" fill="url(#hillFront3D)"/>
     </svg>
 
+    <!-- 3. ГИРЛЯНДА СВЕРХУ -->
     <div class="garland-wrap">
         <svg class="garland-svg" viewBox="0 0 1440 65" preserveAspectRatio="none">
             <defs>
@@ -886,6 +917,7 @@
                 <radialGradient id="bulbY" cx="35%" cy="35%" r="65%"><stop offset="0%" stop-color="#ffffff"/><stop offset="35%" stop-color="#fde047"/><stop offset="100%" stop-color="#b45309"/></radialGradient>
                 <radialGradient id="bulbG" cx="35%" cy="35%" r="65%"><stop offset="0%" stop-color="#ffffff"/><stop offset="35%" stop-color="#34d399"/><stop offset="100%" stop-color="#065f46"/></radialGradient>
                 <radialGradient id="bulbB" cx="35%" cy="35%" r="65%"><stop offset="0%" stop-color="#ffffff"/><stop offset="35%" stop-color="#60a5fa"/><stop offset="100%" stop-color="#1e3a8a"/></radialGradient>
+                <radialGradient id="bulbP" cx="35%" cy="35%" r="65%"><stop offset="0%" stop-color="#ffffff"/><stop offset="35%" stop-color="#e879f9"/><stop offset="100%" stop-color="#701a75"/></radialGradient>
             </defs>
             <path d="M0,5 Q180,55 360,5 Q540,55 720,5 Q900,55 1080,5 Q1260,55 1440,5" stroke="#0f172a" stroke-width="4" fill="none"/>
             <circle class="bulb r" cx="90" cy="24" r="8" fill="url(#bulbR)"/>
@@ -906,6 +938,7 @@
         </svg>
     </div>
 
+    <!-- АДАПТИВНЫЙ ВЕРХНИЙ БАР С ИНДИКАТОРОМ ОБЛАКА FIREBASE -->
     <div class="top-hud-bar">
         <div class="hud-left-group">
             <button class="logout-btn" id="logoutBtn" onclick="logout()">
@@ -929,6 +962,7 @@
         </div>
     </div>
 
+    <!-- ================= ЭКРАН 1: ВХОД И 3D ГЛОБУС ================= -->
     <section id="screen-login" class="screen active">
         <div class="login-card glass-card">
             
@@ -964,7 +998,7 @@
                             <rect x="36" y="16" width="18" height="26" fill="#5c1c07"/>
                             <rect x="38" y="2" width="7" height="14" fill="#451a03"/>
                             <path d="M-4 18 L 18 0 L 42 18 Q 18 22, -4 18 Z" fill="#ffffff"/>
-                            <path d="M18 0 L 42 18 L 58 16 L 36 0 Z" fill="url(#dbeafe)"/>
+                            <path d="M18 0 L 42 18 L 58 16 L 36 0 Z" fill="#dbeafe"/>
                             <rect x="12" y="20" width="14" height="14" rx="2" fill="#fef08a" stroke="#451a03" stroke-width="1.5"/>
                             <line x1="19" y1="20" x2="19" y2="34" stroke="#451a03" stroke-width="1.5"/>
                             <line x1="12" y1="27" x2="26" y2="27" stroke="#451a03" stroke-width="1.5"/>
@@ -1037,7 +1071,7 @@
                 <label>Nume Utilizator (Login)</label>
                 <div class="input-field-wrap">
                     <i class="fa-solid fa-user"></i>
-                    <input type="text" id="loginInput" class="styled-input" placeholder="Ex: Sanecika, Dima, Tim, Sabina...">
+                    <input type="text" id="loginInput" class="styled-input" placeholder="Introdu numele tău...">
                 </div>
             </div>
 
@@ -1045,7 +1079,7 @@
                 <label>Parolă</label>
                 <div class="input-field-wrap">
                     <i class="fa-solid fa-lock"></i>
-                    <input type="password" id="passInput" class="styled-input" placeholder="Introdu parola ta">
+                    <input type="password" id="passInput" class="styled-input" placeholder="Introdu parola ta...">
                 </div>
             </div>
 
@@ -1055,9 +1089,11 @@
         </div>
     </section>
 
+    <!-- ================= ЭКРАН 2: ПРОФИЛЬ УЧАСТНИКА ================= -->
     <section id="screen-profile" class="screen">
         
         <div class="col-left">
+            <!-- Блок 1: Анкета о себе (Изначально чистая) -->
             <div class="glass-card">
                 <div class="section-header">
                     <h2 id="profileGreeting">Salut!</h2>
@@ -1067,19 +1103,19 @@
                 <div class="bio-grid">
                     <div class="bio-field">
                         <label><i class="fa-solid fa-palette"></i> Culoare Preferată:</label>
-                        <input type="text" id="bioColor" class="bio-input" placeholder="">
+                        <input type="text" id="bioColor" class="bio-input" placeholder="Completează aici...">
                     </div>
                     <div class="bio-field">
                         <label><i class="fa-solid fa-heart"></i> Chestii preferate (show-uri, hobby-uri, etc.):</label>
-                        <input type="text" id="bioHobbies" class="bio-input" placeholder="">
+                        <input type="text" id="bioHobbies" class="bio-input" placeholder="Completează aici...">
                     </div>
                     <div class="bio-field full">
                         <label><i class="fa-solid fa-gift"></i> Ce vreau să primesc:</label>
-                        <textarea id="bioWant" class="bio-textarea" placeholder=""></textarea>
+                        <textarea id="bioWant" class="bio-textarea" placeholder="Completează aici..."></textarea>
                     </div>
                     <div class="bio-field full">
                         <label><i class="fa-solid fa-ban"></i> Ce nu vreau să primesc:</label>
-                        <textarea id="bioDontWant" class="bio-textarea" placeholder=""></textarea>
+                        <textarea id="bioDontWant" class="bio-textarea" placeholder="Completează aici..."></textarea>
                     </div>
                 </div>
 
@@ -1091,13 +1127,14 @@
                 </div>
             </div>
 
+            <!-- Блок 2: Вишлист с фото -->
             <div class="glass-card">
                 <div class="section-header">
                     <h2>Wishlist-ul Meu 🎁</h2>
                 </div>
 
                 <div class="wish-add-bar">
-                    <input type="text" id="wishTitleInput" class="wish-text-in" placeholder="Scrie o dorință (ex: Hanorac, Joc, Carte)...">
+                    <input type="text" id="wishTitleInput" class="wish-text-in" placeholder="Adaugă o dorință în wishlist...">
                     
                     <label class="photo-upload-label" for="wishPhotoInput">
                         <i class="fa-solid fa-camera"></i> <span id="photoLabelText">Adaugă Foto</span>
@@ -1112,6 +1149,7 @@
                 <div class="wishlist-items-grid" id="myWishlistGrid"></div>
             </div>
 
+            <!-- Блок 3: 3D ЕЛКА С НАСТОЯЩИМИ СВЕТЯЩИМИСЯ ГИРЛЯНДАМИ -->
             <div class="glass-card">
                 <div class="section-header">
                     <h2>Bradul cu Scrisori 🎄</h2>
@@ -1121,6 +1159,7 @@
                 </div>
 
                 <div class="tree-letters-layout">
+                    <!-- Моя 3D Елка с висящими глобусами-письмами -->
                     <div>
                         <p id="myGlobesHint" style="font-size: 12.5px; color: #cbd5e1; text-align: center; margin-bottom: 8px;">
                             Globurile tale (<span id="myGlobesCount">0</span>).
@@ -1177,6 +1216,10 @@
                                     <filter id="starGlow3D" x="-40%" y="-40%" width="180%" height="180%">
                                         <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#fbbf24" flood-opacity="0.7"/>
                                     </filter>
+                                    <!-- Свечение золотого шнура гирлянды -->
+                                    <filter id="cordGlow" x="-20%" y="-20%" width="140%" height="140%">
+                                        <feDropShadow dx="0" dy="2" stdDeviation="2.5" flood-color="#fbbf24" flood-opacity="0.65"/>
+                                    </filter>
                                 </defs>
 
                                 <ellipse cx="145" cy="346" rx="100" ry="13" fill="rgba(0,0,0,0.72)"/>
@@ -1189,6 +1232,7 @@
                                 <path d="M98 306 Q 145 315, 192 306" stroke="url(#brass3D)" stroke-width="5.5" fill="none" stroke-linecap="round"/>
                                 <path d="M106 328 Q 145 336, 184 328" stroke="url(#brass3D)" stroke-width="4" fill="none"/>
 
+                                <!-- ЯРУС 1 -->
                                 <g filter="url(#tierShadow3D)">
                                     <path d="M145 170 C 108 214, 58 254, 18 286 L 44 280 L 32 298 Q 62 304, 80 288 L 74 304 Q 108 310, 126 292 L 145 310 L 164 292 Q 182 310, 216 304 L 210 288 Q 228 304, 258 298 L 246 280 L 272 286 C 232 254, 182 214, 145 170 Z" fill="url(#pine3DTierDeep)"/>
                                     <path d="M145 182 C 115 225, 75 262, 36 292 Q 72 288, 95 270 Q 90 292, 118 288 Q 132 275, 145 304 Z" fill="url(#branchHighlight3D)"/>
@@ -1198,6 +1242,7 @@
                                     <path d="M210 288 Q 234 286, 258 298 Q 230 304, 210 288 Z" fill="url(#snow3DPuff)"/>
                                 </g>
 
+                                <!-- ЯРУС 2 -->
                                 <g filter="url(#tierShadow3D)">
                                     <path d="M145 124 C 112 165, 68 202, 34 234 L 58 228 L 46 246 Q 76 250, 94 235 L 90 250 Q 118 256, 132 240 L 145 256 L 158 240 Q 172 256, 200 250 L 196 235 Q 214 250, 244 246 L 232 228 L 256 234 C 222 202, 178 165, 145 124 Z" fill="url(#pine3DTierLight)"/>
                                     <path d="M145 135 C 120 174, 84 208, 50 240 Q 82 236, 102 222 Q 100 240, 126 238 L 145 250 Z" fill="url(#branchHighlight3D)"/>
@@ -1207,6 +1252,7 @@
                                     <path d="M196 235 Q 220 235, 244 246 Q 216 250, 196 235 Z" fill="url(#snow3DPuff)"/>
                                 </g>
 
+                                <!-- ЯРУС 3 -->
                                 <g filter="url(#tierShadow3D)">
                                     <path d="M145 80 C 116 116, 82 148, 52 178 L 74 174 L 64 190 Q 92 194, 108 180 L 106 194 Q 128 198, 145 184 Q 162 198, 184 194 L 182 180 Q 198 194, 226 190 L 216 174 L 238 178 C 208 148, 174 116, 145 80 Z" fill="url(#pine3DTierDeep)"/>
                                     <path d="M145 90 C 124 124, 94 154, 66 184 Q 96 180, 114 168 L 145 184 Z" fill="url(#branchHighlight3D)"/>
@@ -1215,6 +1261,7 @@
                                     <path d="M182 180 Q 204 180, 226 190 Q 202 194, 182 180 Z" fill="url(#snow3DPuff)"/>
                                 </g>
 
+                                <!-- ЯРУС 4 -->
                                 <g filter="url(#tierShadow3D)">
                                     <path d="M145 44 C 122 76, 96 104, 74 128 L 92 124 L 84 138 Q 110 142, 124 130 L 145 142 L 166 130 Q 180 142, 206 138 L 198 124 L 216 128 C 194 104, 168 76, 145 44 Z" fill="url(#pine3DTierLight)"/>
                                     <path d="M145 52 C 128 82, 106 108, 86 132 Q 112 128, 145 138 Z" fill="url(#branchHighlight3D)"/>
@@ -1223,6 +1270,7 @@
                                     <path d="M166 130 Q 186 128, 206 138 Q 184 141, 166 130 Z" fill="url(#snow3DPuff)"/>
                                 </g>
 
+                                <!-- ЯРУС 5 -->
                                 <g filter="url(#tierShadow3D)">
                                     <path d="M145 18 C 128 44, 110 66, 94 88 L 114 84 L 124 94 L 145 86 L 166 94 L 176 84 L 196 88 C 180 66, 162 44, 145 18 Z" fill="url(#pine3DTierDeep)"/>
                                     <path d="M145 24 L 112 82 Q 130 88, 145 84 Z" fill="url(#branchHighlight3D)"/>
@@ -1230,24 +1278,53 @@
                                     <path d="M166 94 Q 180 82, 196 88 Q 184 92, 166 94 Z" fill="url(#snow3DPuff)"/>
                                 </g>
 
-                                <path d="M108 78 Q 145 98, 182 80" stroke="#fef08a" stroke-width="2" stroke-dasharray="3 5" fill="none" opacity="0.85"/>
-                                <path d="M86 126 Q 145 154, 204 124" stroke="#fef08a" stroke-width="2.2" stroke-dasharray="3 5" fill="none" opacity="0.85"/>
-                                <path d="M64 176 Q 145 212, 226 174" stroke="#fef08a" stroke-width="2.5" stroke-dasharray="4 6" fill="none" opacity="0.85"/>
-                                <path d="M46 232 Q 145 270, 244 228" stroke="#fef08a" stroke-width="2.5" stroke-dasharray="4 6" fill="none" opacity="0.85"/>
-                                <path d="M30 282 Q 145 322, 258 280" stroke="#fef08a" stroke-width="2.8" stroke-dasharray="4 6" fill="none" opacity="0.85"/>
+                                <!-- ===== НАСТОЯЩИЕ ИЗЯЩНЫЕ 3D ГИРЛЯНДЫ НА ЕЛКЕ (ЗОЛОТЫЕ ПРОВОДА + ПОДВЕСНЫЕ ЛАМПОЧКИ) ===== -->
+                                <g filter="url(#cordGlow)">
+                                    <!-- Ветка гирлянды 1 (Верхняя) -->
+                                    <path d="M108 68 Q 145 92, 182 70" stroke="url(#brass3D)" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+                                    <!-- Ветка гирлянды 2 -->
+                                    <path d="M88 112 Q 116 132, 145 122 Q 174 132, 202 110" stroke="url(#brass3D)" stroke-width="2.6" fill="none" stroke-linecap="round"/>
+                                    <!-- Ветка гирлянды 3 -->
+                                    <path d="M68 158 Q 106 184, 145 170 Q 184 184, 222 156" stroke="url(#brass3D)" stroke-width="2.8" fill="none" stroke-linecap="round"/>
+                                    <!-- Ветка гирлянды 4 -->
+                                    <path d="M50 212 Q 98 242, 145 224 Q 192 242, 240 210" stroke="url(#brass3D)" stroke-width="3" fill="none" stroke-linecap="round"/>
+                                    <!-- Ветка гирлянды 5 (Нижняя) -->
+                                    <path d="M36 264 Q 90 296, 145 276 Q 200 296, 254 262" stroke="url(#brass3D)" stroke-width="3.2" fill="none" stroke-linecap="round"/>
+                                </g>
 
-                                <circle class="bulb y" cx="126" cy="86" r="3.5" fill="url(#bulbY)"/>
-                                <circle class="bulb r" cx="164" cy="85" r="3.5" fill="url(#bulbR)"/>
-                                <circle class="bulb b" cx="108" cy="134" r="4" fill="url(#bulbB)"/>
-                                <circle class="bulb g" cx="148" cy="140" r="4" fill="url(#bulbG)"/>
-                                <circle class="bulb y" cx="186" cy="131" r="4" fill="url(#bulbY)"/>
-                                <circle class="bulb r" cx="92" cy="186" r="4.2" fill="url(#bulbR)"/>
-                                <circle class="bulb y" cx="142" cy="194" r="4.2" fill="url(#bulbY)"/>
-                                <circle class="bulb b" cx="198" cy="184" r="4.2" fill="url(#bulbB)"/>
-                                <circle class="bulb g" cx="78" cy="244" r="4.5" fill="url(#bulbG)"/>
-                                <circle class="bulb r" cx="146" cy="252" r="4.5" fill="url(#bulbR)"/>
-                                <circle class="bulb y" cx="212" cy="240" r="4.5" fill="url(#bulbY)"/>
+                                <!-- Лампочки с цоколями на гирлянде 1 -->
+                                <g class="tree-garland-light d1"><rect x="122" y="75" width="4" height="3" fill="#b45309"/><ellipse cx="124" cy="81" rx="3.2" ry="4.5" fill="url(#bulbR)"/></g>
+                                <g class="tree-garland-light d2"><rect x="143" y="79" width="4" height="3" fill="#b45309"/><ellipse cx="145" cy="85" rx="3.2" ry="4.5" fill="url(#bulbY)"/></g>
+                                <g class="tree-garland-light d3"><rect x="164" y="75" width="4" height="3" fill="#b45309"/><ellipse cx="166" cy="81" rx="3.2" ry="4.5" fill="url(#bulbB)"/></g>
 
+                                <!-- Лампочки на гирлянде 2 -->
+                                <g class="tree-garland-light d2"><rect x="100" y="118" width="4" height="3" fill="#b45309"/><ellipse cx="102" cy="124" rx="3.4" ry="4.8" fill="url(#bulbG)"/></g>
+                                <g class="tree-garland-light d4"><rect x="124" y="124" width="4" height="3" fill="#b45309"/><ellipse cx="126" cy="130" rx="3.4" ry="4.8" fill="url(#bulbP)"/></g>
+                                <g class="tree-garland-light d1"><rect x="162" y="124" width="4" height="3" fill="#b45309"/><ellipse cx="164" cy="130" rx="3.4" ry="4.8" fill="url(#bulbR)"/></g>
+                                <g class="tree-garland-light d3"><rect x="186" y="117" width="4" height="3" fill="#b45309"/><ellipse cx="188" cy="123" rx="3.4" ry="4.8" fill="url(#bulbY)"/></g>
+
+                                <!-- Лампочки на гирлянде 3 -->
+                                <g class="tree-garland-light d3"><rect x="83" y="166" width="4" height="3" fill="#b45309"/><ellipse cx="85" cy="173" rx="3.6" ry="5" fill="url(#bulbY)"/></g>
+                                <g class="tree-garland-light d1"><rect x="112" y="174" width="4" height="3" fill="#b45309"/><ellipse cx="114" cy="181" rx="3.6" ry="5" fill="url(#bulbB)"/></g>
+                                <g class="tree-garland-light d2"><rect x="143" y="170" width="4" height="3" fill="#b45309"/><ellipse cx="145" cy="177" rx="3.6" ry="5" fill="url(#bulbR)"/></g>
+                                <g class="tree-garland-light d4"><rect x="174" y="174" width="4" height="3" fill="#b45309"/><ellipse cx="176" cy="181" rx="3.6" ry="5" fill="url(#bulbG)"/></g>
+                                <g class="tree-garland-light d1"><rect x="203" y="165" width="4" height="3" fill="#b45309"/><ellipse cx="205" cy="172" rx="3.6" ry="5" fill="url(#bulbP)"/></g>
+
+                                <!-- Лампочки на гирлянде 4 -->
+                                <g class="tree-garland-light d4"><rect x="68" y="221" width="4.2" height="3" fill="#b45309"/><ellipse cx="70" cy="228" rx="3.8" ry="5.2" fill="url(#bulbR)"/></g>
+                                <g class="tree-garland-light d2"><rect x="102" y="230" width="4.2" height="3" fill="#b45309"/><ellipse cx="104" cy="237" rx="3.8" ry="5.2" fill="url(#bulbY)"/></g>
+                                <g class="tree-garland-light d3"><rect x="143" y="224" width="4.2" height="3" fill="#b45309"/><ellipse cx="145" cy="231" rx="3.8" ry="5.2" fill="url(#bulbG)"/></g>
+                                <g class="tree-garland-light d1"><rect x="184" y="230" width="4.2" height="3" fill="#b45309"/><ellipse cx="186" cy="237" rx="3.8" ry="5.2" fill="url(#bulbB)"/></g>
+                                <g class="tree-garland-light d2"><rect x="218" y="220" width="4.2" height="3" fill="#b45309"/><ellipse cx="220" cy="227" rx="3.8" ry="5.2" fill="url(#bulbR)"/></g>
+
+                                <!-- Лампочки на гирлянде 5 -->
+                                <g class="tree-garland-light d1"><rect x="56" y="273" width="4.5" height="3" fill="#b45309"/><ellipse cx="58" cy="280" rx="4" ry="5.5" fill="url(#bulbB)"/></g>
+                                <g class="tree-garland-light d3"><rect x="95" y="283" width="4.5" height="3" fill="#b45309"/><ellipse cx="97" cy="290" rx="4" ry="5.5" fill="url(#bulbR)"/></g>
+                                <g class="tree-garland-light d4"><rect x="143" y="276" width="4.5" height="3" fill="#b45309"/><ellipse cx="145" cy="283" rx="4" ry="5.5" fill="url(#bulbY)"/></g>
+                                <g class="tree-garland-light d2"><rect x="191" y="283" width="4.5" height="3" fill="#b45309"/><ellipse cx="193" cy="290" rx="4" ry="5.5" fill="url(#bulbP)"/></g>
+                                <g class="tree-garland-light d3"><rect x="230" y="272" width="4.5" height="3" fill="#b45309"/><ellipse cx="232" cy="279" rx="4" ry="5.5" fill="url(#bulbG)"/></g>
+
+                                <!-- ГРАНЕНАЯ 3D ЗВЕЗДА НА ВЕРХУШКЕ -->
                                 <g filter="url(#starGlow3D)">
                                     <polygon points="145,22 145,-6 137,12" fill="url(#starFacetBright)"/>
                                     <polygon points="145,22 145,-6 153,12" fill="url(#starFacetDark)"/>
@@ -1269,6 +1346,7 @@
                         </div>
                     </div>
 
+                    <!-- Форма отправки глобуса с письмом другу -->
                     <div style="background: rgba(4, 10, 22, 0.45); padding: 18px; border-radius: 18px; border: 1px solid rgba(255,255,255,0.08);">
                         <h3 style="font-size: 16px; color: var(--gold); margin-bottom: 12px;">
                             <i class="fa-solid fa-paper-plane"></i> Trimite un Glob cu Scrisoare
@@ -1311,6 +1389,7 @@
             </div>
         </div>
 
+        <!-- Правая колонка: 3D Подарок и Подопечный -->
         <div class="col-right">
             <div class="glass-card gift-stage">
                 <div class="section-header" style="width:100%; justify-content:center;">
@@ -1353,6 +1432,7 @@
                     </svg>
                 </div>
 
+                <!-- Карточка подопечного -->
                 <div class="target-reveal-box" id="targetRevealBox">
                     <div class="target-badge">
                         <span>Tu ești Secret Santa pentru:</span>
@@ -1389,6 +1469,7 @@
 
     </section>
 
+    <!-- МОДАЛЬНОЕ ОКНО ПРОСМОТРА ПИСЬМА В ШАРЕ -->
     <div class="letter-modal-backdrop" id="letterModal" onclick="if(event.target===this) closeLetterModal()">
         <div class="letter-modal-card">
             <button class="modal-close-x" onclick="closeLetterModal()">&times;</button>
@@ -1409,58 +1490,72 @@
     </div>
 
     <script>
+        // ====== 1. ПОДКЛЮЧЕНИЕ FIREBASE REALTIME DATABASE (НОВЫЙ ЧИСТЫЙ УЗЕЛ users_v2) ======
         const FIREBASE_BASE_URL = "https://secretsanta-16a4a-default-rtdb.europe-west1.firebasedatabase.app";
-        const STORAGE_KEY = "secretSanta2027_DB_v7_cloud";
+        const DB_NODE = "users_v2";
+        const STORAGE_KEY = "secretSanta2027_DB_v7_clean";
 
-        // Новая жеребьевка для 12 участников (Sanecika дарит подарок Vlada)
+        // 12 участников с индивидуальными паролями и абсолютно пустыми полями профиля
         const defaultUsers = {
             "sanecika": {
-                displayName: "Sanecika", pass: "Santa2027#San", target: "vlada",
-                bio: { color: "", hobbies: "", want: "", dontWant: "" }, wishes: [], letters: []
-            },
-            "dima": {
-                displayName: "Dima", pass: "Frost#Dim27", target: "sanecika",
-                bio: { color: "", hobbies: "", want: "", dontWant: "" }, wishes: [], letters: []
-            },
-            "sabina": {
-                displayName: "Sabina", pass: "Snow#Sab99", target: "dima",
-                bio: { color: "", hobbies: "", want: "", dontWant: "" }, wishes: [], letters: []
-            },
-            "tim": {
-                displayName: "Tim", pass: "Magic#Tim01", target: "sabina",
-                bio: { color: "", hobbies: "", want: "", dontWant: "" }, wishes: [], letters: []
+                displayName: "Sanecika", pass: "Mos842", target: "vlada",
+                bio: { color: "", hobbies: "", want: "", dontWant: "" },
+                wishes: [], letters: []
             },
             "vlada": {
-                displayName: "Vlada", pass: "Star#Vla88", target: "tim",
-                bio: { color: "", hobbies: "", want: "", dontWant: "" }, wishes: [], letters: []
+                displayName: "Vlada", pass: "Stea319", target: "tim",
+                bio: { color: "", hobbies: "", want: "", dontWant: "" },
+                wishes: [], letters: []
             },
-            "sorin": {
-                displayName: "Sorin", pass: "Deer#Sor55", target: "dana",
-                bio: { color: "", hobbies: "", want: "", dontWant: "" }, wishes: [], letters: []
-            },
-            "dana": {
-                displayName: "Dana", pass: "Bell#Dan33", target: "beniamin",
-                bio: { color: "", hobbies: "", want: "", dontWant: "" }, wishes: [], letters: []
-            },
-            "beniamin": {
-                displayName: "Beniamin", pass: "Gifts#Ben77", target: "evelina",
-                bio: { color: "", hobbies: "", want: "", dontWant: "" }, wishes: [], letters: []
+            "tim": {
+                displayName: "Tim", pass: "Elfi670", target: "evelina",
+                bio: { color: "", hobbies: "", want: "", dontWant: "" },
+                wishes: [], letters: []
             },
             "evelina": {
-                displayName: "Evelina", pass: "Cookie#Eve22", target: "bogdan",
-                bio: { color: "", hobbies: "", want: "", dontWant: "" }, wishes: [], letters: []
+                displayName: "Evelina", pass: "Magie516", target: "dima",
+                bio: { color: "", hobbies: "", want: "", dontWant: "" },
+                wishes: [], letters: []
             },
-            "bogdan": {
-                displayName: "Bogdan", pass: "Candy#Bog44", target: "daniela",
-                bio: { color: "", hobbies: "", want: "", dontWant: "" }, wishes: [], letters: []
-            },
-            "daniela": {
-                displayName: "Daniela", pass: "Wishes#Dan66", target: "alina",
-                bio: { color: "", hobbies: "", want: "", dontWant: "" }, wishes: [], letters: []
+            "dima": {
+                displayName: "Dima", pass: "Nord382", target: "alina",
+                bio: { color: "", hobbies: "", want: "", dontWant: "" },
+                wishes: [], letters: []
             },
             "alina": {
-                displayName: "Alina", pass: "Winter#Ali11", target: "sorin",
-                bio: { color: "", hobbies: "", want: "", dontWant: "" }, wishes: [], letters: []
+                displayName: "Alina", pass: "Glob437", target: "sorin",
+                bio: { color: "", hobbies: "", want: "", dontWant: "" },
+                wishes: [], letters: []
+            },
+            "sorin": {
+                displayName: "Sorin", pass: "Brad208", target: "daniela",
+                bio: { color: "", hobbies: "", want: "", dontWant: "" },
+                wishes: [], letters: []
+            },
+            "daniela": {
+                displayName: "Daniela", pass: "Cadou149", target: "beniamin",
+                bio: { color: "", hobbies: "", want: "", dontWant: "" },
+                wishes: [], letters: []
+            },
+            "beniamin": {
+                displayName: "Beniamin", pass: "Ren691", target: "sabina",
+                bio: { color: "", hobbies: "", want: "", dontWant: "" },
+                wishes: [], letters: []
+            },
+            "sabina": {
+                displayName: "Sabina", pass: "Fulg754", target: "bogdan",
+                bio: { color: "", hobbies: "", want: "", dontWant: "" },
+                wishes: [], letters: []
+            },
+            "bogdan": {
+                displayName: "Bogdan", pass: "Sanie925", target: "dana",
+                bio: { color: "", hobbies: "", want: "", dontWant: "" },
+                wishes: [], letters: []
+            },
+            "dana": {
+                displayName: "Dana", pass: "Iarna863", target: "sanecika",
+                bio: { color: "", hobbies: "", want: "", dontWant: "" },
+                wishes: [], letters: []
             }
         };
 
@@ -1508,13 +1603,13 @@
                 const rem = (remoteData && remoteData[k]) ? remoteData[k] : {};
                 merged[k] = {
                     displayName: def.displayName,
-                    pass: rem.pass || def.pass,
-                    target: def.target,
+                    pass: def.pass, // Фиксируем уникальные пароли из кода
+                    target: def.target, // Фиксируем новую жеребьевку из кода
                     bio: {
-                        color: (rem.bio && rem.bio.color !== undefined) ? rem.bio.color : def.bio.color,
-                        hobbies: (rem.bio && rem.bio.hobbies !== undefined) ? rem.bio.hobbies : def.bio.hobbies,
-                        want: (rem.bio && rem.bio.want !== undefined) ? rem.bio.want : def.bio.want,
-                        dontWant: (rem.bio && rem.bio.dontWant !== undefined) ? rem.bio.dontWant : def.bio.dontWant
+                        color: (rem.bio && rem.bio.color !== undefined) ? rem.bio.color : "",
+                        hobbies: (rem.bio && rem.bio.hobbies !== undefined) ? rem.bio.hobbies : "",
+                        want: (rem.bio && rem.bio.want !== undefined) ? rem.bio.want : "",
+                        dontWant: (rem.bio && rem.bio.dontWant !== undefined) ? rem.bio.dontWant : ""
                     },
                     wishes: Array.isArray(rem.wishes) ? rem.wishes : (rem.wishes ? Object.values(rem.wishes) : []),
                     letters: Array.isArray(rem.letters) ? rem.letters : (rem.letters ? Object.values(rem.letters) : [])
@@ -1526,29 +1621,18 @@
         async function syncFromCloud(quiet = false) {
             if (!quiet) setSyncIndicator('syncing');
             try {
-                const res = await fetch(`${FIREBASE_BASE_URL}/users.json`);
+                const res = await fetch(`${FIREBASE_BASE_URL}/${DB_NODE}.json`);
                 if (!res.ok) throw new Error("Firebase response error");
                 const remoteData = await res.json();
 
                 if (!remoteData) {
-                    await fetch(`${FIREBASE_BASE_URL}/users.json`, {
+                    await fetch(`${FIREBASE_BASE_URL}/${DB_NODE}.json`, {
                         method: 'PUT',
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify(defaultUsers)
                     });
                     db = JSON.parse(JSON.stringify(defaultUsers));
                 } else {
-                    let missingUsers = {};
-                    Object.keys(defaultUsers).forEach(k => {
-                        if (!remoteData[k]) missingUsers[k] = defaultUsers[k];
-                    });
-                    if (Object.keys(missingUsers).length > 0) {
-                        await fetch(`${FIREBASE_BASE_URL}/users.json`, {
-                            method: 'PATCH',
-                            headers: { 'Content-Type': 'application/json' },
-                            body: JSON.stringify(missingUsers)
-                        });
-                    }
                     db = normalizeDB(remoteData);
                 }
 
@@ -1571,7 +1655,7 @@
             localStorage.setItem(STORAGE_KEY, JSON.stringify(db));
             setSyncIndicator('syncing');
             try {
-                const res = await fetch(`${FIREBASE_BASE_URL}/users/${userKey}.json`, {
+                const res = await fetch(`${FIREBASE_BASE_URL}/${DB_NODE}/${userKey}.json`, {
                     method: 'PATCH',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(db[userKey])
@@ -1597,6 +1681,7 @@
             if (dots[0]) dots[0].classList.add('selected');
         }
 
+        // ====== 2. АВТОРИЗАЦИЯ ======
         async function handleLogin() {
             const loginRaw = document.getElementById('loginInput').value.trim().toLowerCase();
             const passRaw = document.getElementById('passInput').value.trim();
@@ -1659,6 +1744,7 @@
             document.getElementById('logoutBtn').style.display = 'none';
         }
 
+        // ====== 3. СОХРАНЕНИЕ ДАННЫХ О СЕБЕ В FIREBASE ======
         async function saveBio() {
             if (!currentUserKey) return;
             db[currentUserKey].bio = {
@@ -1674,6 +1760,7 @@
             setTimeout(() => { toast.style.display = 'none'; }, 2500);
         }
 
+        // ====== 4. ВИШЛИСТ И УМНОЕ СЖАТИЕ ФОТО ДЛЯ ОБЛАКА ======
         function previewSelectedPhoto(input) {
             const file = input.files[0];
             if (!file) return;
@@ -1753,6 +1840,7 @@
             });
         }
 
+        // ====== 5. ПЕРСОНАЛЬНАЯ ЕЛКА И ЛИМИТ: 1 ШАР НА ЧУЖУЮ ЕЛКУ ======
         function populateRecipientSelect() {
             const sel = document.getElementById('letterRecipient');
             const sendBtn = document.getElementById('sendGlobeBtn');
@@ -1801,8 +1889,19 @@
             const toKey = document.getElementById('letterRecipient').value;
             if (!toKey || toKey === currentUserKey) return;
 
+            const fromName = document.getElementById('letterSenderName').value.trim() || "Prieten Secret ✨";
+            const msgText = document.getElementById('letterMessageText').value.trim();
+
+            if (!msgText) {
+                alert("Scrie un mesaj înainte de a agăța globul în brad!");
+                return;
+            }
+
+            const sendBtn = document.getElementById('sendGlobeBtn');
+            sendBtn.disabled = true;
+
             try {
-                const res = await fetch(`${FIREBASE_BASE_URL}/users/${toKey}/letters.json`);
+                const res = await fetch(`${FIREBASE_BASE_URL}/${DB_NODE}/${toKey}/letters.json`);
                 if (res.ok) {
                     const remoteLetters = await res.json();
                     db[toKey].letters = Array.isArray(remoteLetters)
@@ -1813,14 +1912,6 @@
 
             if (db[toKey].letters.some(l => l.senderKey === currentUserKey)) {
                 populateRecipientSelect();
-                return;
-            }
-
-            const fromName = document.getElementById('letterSenderName').value.trim() || "Prieten Secret ✨";
-            const msgText = document.getElementById('letterMessageText').value.trim();
-
-            if (!msgText) {
-                alert("Scrie un mesaj înainte de a agăța globul în brad!");
                 return;
             }
 
@@ -1840,6 +1931,7 @@
             setTimeout(() => { toast.style.display = 'none'; }, 3000);
 
             confetti({ particleCount: 55, spread: 65, origin: { y: 0.7 } });
+
             populateRecipientSelect();
         }
 
@@ -1922,6 +2014,7 @@
             if (el) el.innerText = `${d}z ${h}h ${m}m ${s}s`;
         }
 
+        // ====== 6. РАСПАКОВКА ПОДАРКА ======
         function updateRevealedTargetInfo() {
             if (!currentUserKey) return;
             const targetKey = db[currentUserKey].target;
@@ -1974,6 +2067,7 @@
             }, 720);
         }
 
+        // ====== 7. ТАЙМЕРЫ ======
         function updateCountdown() {
             const targetDate = new Date("Jan 7, 2027 00:00:00").getTime();
             const now = Date.now();
@@ -1992,6 +2086,7 @@
         setInterval(updateCountdown, 1000);
         updateCountdown();
 
+        // ====== 8. СНЕГОПАД НА ФОНЕ ======
         const canvas = document.getElementById('snow-canvas');
         const ctx = canvas.getContext('2d');
         let flakes = [];
