@@ -95,17 +95,33 @@
             filter: drop-shadow(0 -10px 25px rgba(0,0,0,0.65));
         }
 
-        /* ====== 4. ВЕРХНЯЯ ГИРЛЯНДА И АДАПТИВНЫЙ TOP-BAR ====== */
+        /* ====== 4. ИНТЕРАКТИВНАЯ ГИРЛЯНДА И АДАПТИВНЫЙ TOP-BAR ====== */
         .garland-wrap {
             position: fixed;
             top: 0; left: 0;
             width: 100%; height: 50px;
             z-index: 30;
-            pointer-events: none;
+            pointer-events: auto;
             overflow: hidden;
         }
         .garland-svg { width: 100%; height: 50px; }
-        .bulb { animation: twinkle 1.5s infinite alternate ease-in-out; }
+        .bulb {
+            animation: twinkle 1.5s infinite alternate ease-in-out;
+            cursor: pointer;
+            transition: transform 0.2s, filter 0.2s, opacity 0.2s;
+        }
+        .bulb:hover {
+            transform: scale(1.35) !important;
+            filter: brightness(1.5) drop-shadow(0 0 14px #fff) !important;
+        }
+        .bulb.off {
+            animation: none !important;
+            opacity: 0.25 !important;
+            filter: grayscale(0.9) !important;
+        }
+        .garland-wrap.party-mode .bulb {
+            animation-duration: 0.35s !important;
+        }
         .bulb.r { filter: drop-shadow(0 0 8px #ff2a2a); animation-delay: 0s; }
         .bulb.g { filter: drop-shadow(0 0 8px #10b981); animation-delay: 0.4s; }
         .bulb.y { filter: drop-shadow(0 0 8px #fbbf24); animation-delay: 0.8s; }
@@ -145,6 +161,7 @@
         .hud-left-group {
             display: flex;
             align-items: center;
+            flex-wrap: wrap;
             gap: 8px;
             pointer-events: auto;
         }
@@ -188,6 +205,96 @@
         .sync-dot.syncing { background: #fbbf24; box-shadow: 0 0 8px #fbbf24; }
         .sync-dot.offline { background: #ef4444; box-shadow: 0 0 8px #ef4444; }
 
+        .atmosphere-btn {
+            background: rgba(8, 17, 36, 0.85);
+            border: 1px solid rgba(255, 183, 3, 0.45);
+            color: var(--gold);
+            padding: 7px 11px;
+            border-radius: 12px;
+            font-family: inherit;
+            font-size: 11px;
+            font-weight: 700;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            backdrop-filter: blur(12px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.4);
+            transition: 0.2s;
+        }
+        .atmosphere-btn:hover {
+            background: rgba(255, 183, 3, 0.2);
+            transform: translateY(-1px);
+        }
+
+        /* ====== БЕЙДЖИ НЕПРОЧИТАННЫХ СООБЩЕНИЙ ====== */
+        .unread-pill {
+            display: none;
+            align-items: center;
+            gap: 6px;
+            background: linear-gradient(135deg, #ff3b4e, #b91c1c);
+            border: 1px solid #fecaca;
+            color: #fff;
+            padding: 4px 10px;
+            border-radius: 999px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 11px;
+            font-weight: 800;
+            letter-spacing: 0.3px;
+            box-shadow: 0 0 14px rgba(230, 57, 70, 0.75);
+            animation: badgePulse 1.6s infinite ease-in-out;
+        }
+        .unread-pill.visible {
+            display: inline-flex;
+        }
+        .unread-pill .dot-live {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: #fef08a;
+            box-shadow: 0 0 6px #fef08a;
+        }
+        .hud-unread-alert {
+            display: none;
+            align-items: center;
+            gap: 6px;
+            background: linear-gradient(135deg, #e63946, #9e1924);
+            border: 1px solid var(--gold);
+            color: #fff;
+            padding: 7px 12px;
+            border-radius: 12px;
+            font-family: inherit;
+            font-size: 11px;
+            font-weight: 800;
+            cursor: pointer;
+            box-shadow: 0 0 18px rgba(230, 57, 70, 0.75);
+            animation: badgePulse 1.5s infinite ease-in-out;
+        }
+        .hud-unread-alert.visible {
+            display: inline-flex;
+        }
+        @keyframes badgePulse {
+            0%, 100% { transform: scale(1); box-shadow: 0 0 12px rgba(230, 57, 70, 0.7); }
+            50% { transform: scale(1.06); box-shadow: 0 0 22px rgba(255, 183, 3, 0.9); }
+        }
+        .mark-read-btn {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            color: #cbd5e1;
+            font-family: inherit;
+            font-size: 10.5px;
+            font-weight: 600;
+            padding: 3px 8px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .mark-read-btn:hover {
+            background: rgba(42, 157, 143, 0.35);
+            color: #fff;
+            border-color: var(--green);
+        }
+
         .corner-timer {
             pointer-events: auto;
             margin-left: auto;
@@ -200,6 +307,7 @@
             align-items: center;
             gap: 10px;
             box-shadow: 0 8px 25px rgba(0, 0, 0, 0.55);
+            flex-shrink: 0;
         }
         .timer-caption {
             font-size: 9px; color: #cbd5e1;
@@ -441,6 +549,87 @@
             z-index: 4;
             box-shadow: 0 3px 8px rgba(0,0,0,0.5);
         }
+
+        /* ====== АНОНИМНЫЙ ЧАТ (САНТА <-> ПОДОПЕЧНЫЙ) ====== */
+        .chat-box-container {
+            margin-top: 20px;
+            background: rgba(4, 10, 22, 0.65);
+            border: 1px solid rgba(255, 183, 3, 0.28);
+            border-radius: 18px;
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        .chat-messages-scroll {
+            max-height: 230px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 9px;
+            padding-right: 6px;
+        }
+        .chat-messages-scroll::-webkit-scrollbar { width: 5px; }
+        .chat-messages-scroll::-webkit-scrollbar-thumb { background: rgba(255,183,3,0.4); border-radius: 10px; }
+
+        .chat-bubble {
+            max-width: 84%;
+            padding: 10px 14px;
+            border-radius: 14px;
+            font-size: 13px;
+            line-height: 1.45;
+            word-break: break-word;
+            animation: popReveal 0.25s ease-out;
+        }
+        .chat-bubble.mine {
+            align-self: flex-end;
+            background: linear-gradient(135deg, rgba(230, 57, 70, 0.85), rgba(158, 25, 36, 0.9));
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: #fff;
+            border-bottom-right-radius: 4px;
+        }
+        .chat-bubble.theirs {
+            align-self: flex-start;
+            background: rgba(30, 41, 59, 0.9);
+            border: 1px solid rgba(255, 183, 3, 0.35);
+            color: #f8fafc;
+            border-bottom-left-radius: 4px;
+        }
+        .chat-meta {
+            font-size: 10px;
+            opacity: 0.75;
+            margin-bottom: 3px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.4px;
+        }
+        .chat-input-row {
+            display: flex;
+            gap: 8px;
+        }
+        .chat-input-field {
+            flex: 1;
+            padding: 11px 14px;
+            border-radius: 12px;
+            border: 1px solid rgba(255,255,255,0.18);
+            background: rgba(2, 6, 18, 0.8);
+            color: #fff;
+            font-family: inherit;
+            font-size: 14px;
+            outline: none;
+        }
+        .chat-input-field:focus { border-color: var(--gold); }
+        .chat-send-btn {
+            padding: 0 16px;
+            border-radius: 12px;
+            border: none;
+            background: var(--gold);
+            color: #1e1b08;
+            font-weight: 800;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .chat-send-btn:hover { background: #fcd34d; transform: scale(1.03); }
 
         /* ====== ПЕРСОНАЛЬНАЯ 3D ЕЛКА И УЛЬТРА-3D ГЛОБУСЫ С НИТКОЙ ====== */
         .tree-letters-layout {
@@ -701,7 +890,7 @@
             white-space: pre-wrap;
         }
 
-        /* ====== МОДАЛЬНОЕ ОКНО LIGHTBOX (ПРОСМОТР ФОТО ИЗ ВИШЛИСТА НА ВЕСЬ ЭКРАН) ====== */
+        /* ====== МОДАЛЬНОЕ ОКНО LIGHTBOX ====== */
         .photo-lightbox-backdrop {
             position: fixed;
             top: 0; left: 0;
@@ -767,18 +956,18 @@
         }
 
         @media (max-width: 600px) {
-            .top-hud-bar { top: 28px; padding: 0 10px; }
+            .top-hud-bar { top: 28px; padding: 0 10px; align-items: flex-start; }
             .corner-timer { padding: 5px 9px; gap: 6px; }
             .timer-caption { font-size: 7.5px; padding-right: 5px; }
             .t-val { font-size: 12.5px; }
             .logout-btn { padding: 6px 10px; font-size: 11.5px; }
-            .sync-badge { padding: 6px 9px; font-size: 10px; }
+            .sync-badge, .atmosphere-btn, .hud-unread-alert { padding: 5px 8px; font-size: 10px; }
 
-            .moon-3d { width: 65px; height: 65px; top: 70px; left: 4%; }
-            .santa-sleigh-track { width: 290px; top: 75px; }
+            .moon-3d { width: 65px; height: 65px; top: 82px; left: 4%; }
+            .santa-sleigh-track { width: 290px; top: 85px; }
             .winter-landscape-3d { height: 135px; }
 
-            .screen { padding: 88px 12px 70px; }
+            .screen { padding: 105px 12px 70px; }
             .glass-card { padding: 20px 16px; border-radius: 22px; }
 
             .snowglobe-3d-wrap { width: 175px; height: 195px; margin: -55px auto 4px; }
@@ -999,8 +1188,8 @@
         <path d="M0 250 L0 205 Q 360 165, 740 205 T 1440 190 L 1440 250 Z" fill="url(#hillFront3D)"/>
     </svg>
 
-    <!-- 3. ГИРЛЯНДА СВЕРХУ -->
-    <div class="garland-wrap">
+    <!-- 3. ИНТЕРАКТИВНАЯ ГИРЛЯНДА СВЕРХУ -->
+    <div class="garland-wrap" title="Apasă pe beculețe pentru a le aprinde/stinge!">
         <svg class="garland-svg" viewBox="0 0 1440 65" preserveAspectRatio="none">
             <defs>
                 <radialGradient id="bulbR" cx="35%" cy="35%" r="65%"><stop offset="0%" stop-color="#ffffff"/><stop offset="35%" stop-color="#ff4d4d"/><stop offset="100%" stop-color="#990000"/></radialGradient>
@@ -1038,6 +1227,16 @@
                 <span class="sync-dot" id="syncDot"></span>
                 <span id="syncText">Cloud Sync</span>
             </div>
+            <button class="atmosphere-btn" onclick="cycleGarlandMode()" title="Schimbă modul luminițelor">
+                <i class="fa-solid fa-lightbulb"></i> <span id="garlandModeText">Lumini: Normal</span>
+            </button>
+            <button class="atmosphere-btn" onclick="toggleBlizzard()" title="Intensitate ninsoare">
+                <i class="fa-solid fa-snowflake"></i> <span id="snowModeText">Ninsoare</span>
+            </button>
+            <!-- Индикатор в шапке о новых сообщениях -->
+            <button class="hud-unread-alert" id="hudUnreadBtn" onclick="scrollToUnreadChat()">
+                <i class="fa-solid fa-envelope"></i> <span id="hudUnreadText">1 nou</span>
+            </button>
         </div>
 
         <div class="corner-timer">
@@ -1169,7 +1368,7 @@
                 <label>Parolă</label>
                 <div class="input-field-wrap">
                     <i class="fa-solid fa-lock"></i>
-                    <input type="password" id="passInput" class="styled-input" placeholder="Introdu parola ta...">
+                    <input type="password" id="passInput" class="styled-input" placeholder="Introdu parola ta..." onkeypress="if(event.key==='Enter') handleLogin()">
                 </div>
             </div>
 
@@ -1240,7 +1439,36 @@
                 <div class="wishlist-items-grid" id="myWishlistGrid"></div>
             </div>
 
-            <!-- Блок 3: 3D ЕЛКА С НАСТОЯЩИМИ СВЕТЯЩИМИСЯ ГИРЛЯНДАМИ -->
+            <!-- Блок 3: АНОНИМНЫЙ ЧАТ ОТ МОЕГО ТАЙНОГО САНТЫ + БЕЙДЖ НЕПРОЧИТАННЫХ -->
+            <div class="glass-card" id="mySantaChatCard">
+                <div class="section-header">
+                    <div style="display:flex; align-items:center; gap:10px; flex-wrap:wrap;">
+                        <h2>Mesaje de la Moșul Tău 🎅</h2>
+                        <span class="unread-pill" id="mySantaUnreadBadge">
+                            <span class="dot-live"></span>
+                            <span id="mySantaUnreadCount">1 nou</span>
+                        </span>
+                    </div>
+                    <div style="display:flex; align-items:center; gap:8px;">
+                        <button class="mark-read-btn" id="mySantaMarkReadBtn" style="display:none;" onclick="markChatAsRead('mySanta')">
+                            <i class="fa-solid fa-check-double"></i> Citit
+                        </button>
+                        <span style="font-size: 11.5px; color:#94a3b8;"><i class="fa-solid fa-user-secret"></i> Anonim</span>
+                    </div>
+                </div>
+                <p style="font-size: 12.5px; color: #cbd5e1; margin-bottom: 10px;">
+                    Dacă Secret Santa al tău are întrebări despre cadou (mărime, preferințe), îți va scrie aici:
+                </p>
+                <div class="chat-box-container" style="margin-top:0;" onclick="markChatAsRead('mySanta')">
+                    <div class="chat-messages-scroll" id="mySantaChatMessages"></div>
+                    <div class="chat-input-row">
+                        <input type="text" id="mySantaChatInput" class="chat-input-field" placeholder="Răspunde-i lui Secret Santa..." onfocus="markChatAsRead('mySanta')" onkeypress="if(event.key==='Enter') sendChatMessage('toMySanta')">
+                        <button class="chat-send-btn" onclick="sendChatMessage('toMySanta')" title="Trimite"><i class="fa-solid fa-paper-plane"></i></button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Блок 4: 3D ЕЛКА С НАСТОЯЩИМИ СВЕТЯЩИМИСЯ ГИРЛЯНДАМИ -->
             <div class="glass-card">
                 <div class="section-header">
                     <h2>Bradul cu Scrisori 🎄</h2>
@@ -1250,7 +1478,6 @@
                 </div>
 
                 <div class="tree-letters-layout">
-                    <!-- Моя 3D Елка с висящими глобусами-письмами -->
                     <div>
                         <p id="myGlobesHint" style="font-size: 12.5px; color: #cbd5e1; text-align: center; margin-bottom: 8px;">
                             Globurile tale (<span id="myGlobesCount">0</span>).
@@ -1471,9 +1698,13 @@
 
         <!-- Правая колонка: 3D Подарок и Подопечный -->
         <div class="col-right">
-            <div class="glass-card gift-stage">
-                <div class="section-header" style="width:100%; justify-content:center;">
+            <div class="glass-card gift-stage" id="targetCardContainer">
+                <div class="section-header" style="width:100%; justify-content:center; gap:10px;">
                     <h2>Cui îi dăruiesc eu?</h2>
+                    <span class="unread-pill" id="targetUnreadBadge">
+                        <span class="dot-live"></span>
+                        <span id="targetUnreadCount">1 nou</span>
+                    </span>
                 </div>
                 <p id="giftInstruction" style="color:#cbd5e1; font-size:14px;">
                     Apasă pe cutia de cadou fermecată pentru a descoperi persoana extrasă!
@@ -1542,6 +1773,26 @@
                         <i class="fa-solid fa-list-check"></i> Wishlist & Fotografii (apasă pe poză pentru a mări):
                     </h4>
                     <div class="wishlist-items-grid" id="targetWishlistGrid"></div>
+
+                    <!-- Анонимный чат с подопечным -->
+                    <div class="chat-box-container" id="targetChatContainer" onclick="markChatAsRead('target')">
+                        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:6px;">
+                            <strong style="font-size:12px; color:var(--gold); text-transform:uppercase; letter-spacing:0.5px;">
+                                <i class="fa-solid fa-comments"></i> Întreabă anonim (mărimi, detalii)
+                            </strong>
+                            <div style="display:flex; align-items:center; gap:6px;">
+                                <button class="mark-read-btn" id="targetMarkReadBtn" style="display:none;" onclick="event.stopPropagation(); markChatAsRead('target')">
+                                    <i class="fa-solid fa-check-double"></i> Citit
+                                </button>
+                                <span style="font-size:10.5px; color:#94a3b8;">Nu îți vede numele</span>
+                            </div>
+                        </div>
+                        <div class="chat-messages-scroll" id="targetChatMessages"></div>
+                        <div class="chat-input-row">
+                            <input type="text" id="targetChatInput" class="chat-input-field" placeholder="Scrie o întrebare anonimă..." onfocus="markChatAsRead('target')" onkeypress="if(event.key==='Enter') sendChatMessage('toTarget')">
+                            <button class="chat-send-btn" onclick="sendChatMessage('toTarget')" title="Trimite"><i class="fa-solid fa-paper-plane"></i></button>
+                        </div>
+                    </div>
                 </div>
 
             </div>
@@ -1569,7 +1820,7 @@
         </div>
     </div>
 
-    <!-- МОДАЛЬНОЕ ОКНО LIGHTBOX (ОТКРЫТИЕ ФОТО НА ВЕСЬ ЭКРАН ПО КЛИКУ) -->
+    <!-- МОДАЛЬНОЕ ОКНО LIGHTBOX -->
     <div class="photo-lightbox-backdrop" id="photoLightbox" onclick="if(event.target===this) closePhotoLightbox()">
         <button class="lightbox-close-btn" onclick="closePhotoLightbox()" title="Închide">&times;</button>
         <img id="lightboxImg" class="lightbox-img" src="" alt="Wish Photo">
@@ -1581,71 +1832,73 @@
         const FIREBASE_BASE_URL = "https://secretsanta-16a4a-default-rtdb.europe-west1.firebasedatabase.app";
         const DB_NODE = "users_v2";
         const STORAGE_KEY = "secretSanta2027_DB_v7_clean";
+        const CHAT_READ_KEY = "secretSanta2027_ChatReadState_v1";
 
         const defaultUsers = {
             "sanecika": {
                 displayName: "Sanecika", pass: "Mos842", target: "vlada",
                 bio: { color: "", hobbies: "", want: "", dontWant: "" },
-                wishes: [], letters: []
+                wishes: [], letters: [], santaChat: []
             },
             "vlada": {
                 displayName: "Vlada", pass: "Stea319", target: "tim",
                 bio: { color: "", hobbies: "", want: "", dontWant: "" },
-                wishes: [], letters: []
+                wishes: [], letters: [], santaChat: []
             },
             "tim": {
                 displayName: "Tim", pass: "Elfi670", target: "evelina",
                 bio: { color: "", hobbies: "", want: "", dontWant: "" },
-                wishes: [], letters: []
+                wishes: [], letters: [], santaChat: []
             },
             "evelina": {
                 displayName: "Evelina", pass: "Magie516", target: "dima",
                 bio: { color: "", hobbies: "", want: "", dontWant: "" },
-                wishes: [], letters: []
+                wishes: [], letters: [], santaChat: []
             },
             "dima": {
-                displayName: "Dima", pass: "Nord382", target: "dana", // <-- было "alina"
+                displayName: "Dima", pass: "Nord382", target: "dana",
                 bio: { color: "", hobbies: "", want: "", dontWant: "" },
-                wishes: [], letters: []
+                wishes: [], letters: [], santaChat: []
             },
             "alina": {
                 displayName: "Alina", pass: "Glob437", target: "sorin",
                 bio: { color: "", hobbies: "", want: "", dontWant: "" },
-                wishes: [], letters: []
+                wishes: [], letters: [], santaChat: []
             },
             "sorin": {
                 displayName: "Sorin", pass: "Brad208", target: "daniela",
                 bio: { color: "", hobbies: "", want: "", dontWant: "" },
-                wishes: [], letters: []
+                wishes: [], letters: [], santaChat: []
             },
             "daniela": {
                 displayName: "Daniela", pass: "Cadou149", target: "beniamin",
                 bio: { color: "", hobbies: "", want: "", dontWant: "" },
-                wishes: [], letters: []
+                wishes: [], letters: [], santaChat: []
             },
             "beniamin": {
                 displayName: "Beniamin", pass: "Ren691", target: "sabina",
                 bio: { color: "", hobbies: "", want: "", dontWant: "" },
-                wishes: [], letters: []
+                wishes: [], letters: [], santaChat: []
             },
             "sabina": {
                 displayName: "Sabina", pass: "Fulg754", target: "bogdan",
                 bio: { color: "", hobbies: "", want: "", dontWant: "" },
-                wishes: [], letters: []
+                wishes: [], letters: [], santaChat: []
             },
-           "bogdan": {
-                displayName: "Bogdan", pass: "Sanie925", target: "alina", // <-- было "dana"
+            "bogdan": {
+                displayName: "Bogdan", pass: "Sanie925", target: "alina",
                 bio: { color: "", hobbies: "", want: "", dontWant: "" },
-                wishes: [], letters: []
+                wishes: [], letters: [], santaChat: []
             },
             "dana": {
                 displayName: "Dana", pass: "Iarna863", target: "sanecika",
                 bio: { color: "", hobbies: "", want: "", dontWant: "" },
-                wishes: [], letters: []
+                wishes: [], letters: [], santaChat: []
             }
         };
 
         let db = JSON.parse(localStorage.getItem(STORAGE_KEY)) || JSON.parse(JSON.stringify(defaultUsers));
+        let chatReadState = JSON.parse(localStorage.getItem(CHAT_READ_KEY)) || {};
         let currentUserKey = null;
         let pendingPhotoBase64 = "";
         let selectedOrbColor = "orb-red";
@@ -1698,7 +1951,8 @@
                         dontWant: (rem.bio && rem.bio.dontWant !== undefined) ? rem.bio.dontWant : ""
                     },
                     wishes: Array.isArray(rem.wishes) ? rem.wishes : (rem.wishes ? Object.values(rem.wishes) : []),
-                    letters: Array.isArray(rem.letters) ? rem.letters : (rem.letters ? Object.values(rem.letters) : [])
+                    letters: Array.isArray(rem.letters) ? rem.letters : (rem.letters ? Object.values(rem.letters) : []),
+                    santaChat: Array.isArray(rem.santaChat) ? rem.santaChat : (rem.santaChat ? Object.values(rem.santaChat) : [])
                 };
             });
             return merged;
@@ -1729,6 +1983,7 @@
                     renderMyWishlist();
                     renderMyTreeGlobes();
                     populateRecipientSelect();
+                    renderAllChats();
                     if (isTargetRevealed) updateRevealedTargetInfo();
                 }
             } catch (err) {
@@ -1755,7 +2010,7 @@
         }
 
         syncFromCloud();
-        setInterval(() => syncFromCloud(true), 12000);
+        setInterval(() => syncFromCloud(true), 10000);
 
         function resetLetterForm() {
             document.getElementById('letterSenderName').value = '';
@@ -1838,6 +2093,7 @@
             populateRecipientSelect();
             renderMyWishlist();
             renderMyTreeGlobes();
+            renderAllChats();
         }
 
         function logout() {
@@ -1846,6 +2102,7 @@
             document.getElementById('loginInput').value = '';
             document.getElementById('passInput').value = '';
             resetLetterForm();
+            document.getElementById('hudUnreadBtn').classList.remove('visible');
             document.getElementById('screen-profile').classList.remove('active');
             document.getElementById('screen-login').classList.add('active');
             document.getElementById('logoutBtn').style.display = 'none';
@@ -1876,7 +2133,7 @@
                 const img = new Image();
                 img.onload = function() {
                     const canvas = document.createElement('canvas');
-                    const maxDim = 800; // Четкое качество при открытии на весь экран
+                    const maxDim = 800;
                     let w = img.width;
                     let h = img.height;
                     if (w > h && w > maxDim) {
@@ -2203,6 +2460,7 @@
                 document.getElementById('giftInstruction').style.display = 'none';
                 isTargetRevealed = true;
                 updateRevealedTargetInfo();
+                renderAllChats();
                 document.getElementById('targetRevealBox').style.display = 'block';
             }, 720);
         }
@@ -2266,6 +2524,252 @@
             requestAnimationFrame(drawSnow);
         }
         drawSnow();
+
+        // ====== 9. ИНТЕРАКТИВНАЯ ГИРЛЯНДА И МЕТЕЛЬ ======
+        let garlandMode = 0; // 0: Normal, 1: Party, 2: Stinse
+        let isBlizzard = false;
+
+        document.querySelectorAll('.garland-svg .bulb').forEach(bulb => {
+            bulb.addEventListener('click', () => {
+                bulb.classList.toggle('off');
+            });
+        });
+
+        function cycleGarlandMode() {
+            garlandMode = (garlandMode + 1) % 3;
+            const wrap = document.querySelector('.garland-wrap');
+            const bulbs = document.querySelectorAll('.garland-svg .bulb');
+            const label = document.getElementById('garlandModeText');
+
+            wrap.classList.remove('party-mode');
+            bulbs.forEach(b => b.classList.remove('off'));
+
+            if (garlandMode === 0) {
+                label.innerText = "Lumini: Normal";
+            } else if (garlandMode === 1) {
+                wrap.classList.add('party-mode');
+                label.innerText = "Lumini: Party ✨";
+            } else {
+                bulbs.forEach(b => b.classList.add('off'));
+                label.innerText = "Lumini: Stinse";
+            }
+        }
+
+        function toggleBlizzard() {
+            isBlizzard = !isBlizzard;
+            const label = document.getElementById('snowModeText');
+            if (isBlizzard) {
+                label.innerText = "Viscol ❄️";
+                flakes.forEach(f => {
+                    f.speedY *= 2.4;
+                    f.speedX = (Math.random() * 2.5) + 1.2;
+                });
+            } else {
+                label.innerText = "Ninsoare";
+                flakes.forEach(f => {
+                    f.speedY /= 2.4;
+                    f.speedX = Math.random() * 0.6 - 0.3;
+                });
+            }
+        }
+
+        // ====== 10. АНОНИМНЫЙ ЧАТ И СЧЁТЧИК НЕПРОЧИТАННЫХ ======
+        function getUserReadRecord(userKey) {
+            if (!chatReadState[userKey]) {
+                chatReadState[userKey] = { mySantaIncomingSeen: 0, targetIncomingSeen: 0 };
+            }
+            return chatReadState[userKey];
+        }
+
+        function saveReadState() {
+            localStorage.setItem(CHAT_READ_KEY, JSON.stringify(chatReadState));
+        }
+
+        function getUnreadCounts() {
+            if (!currentUserKey) return { mySantaUnread: 0, targetUnread: 0 };
+            const record = getUserReadRecord(currentUserKey);
+
+            // Входящие от моего Тайного Санты (senderRole === 'santa')
+            const myChat = db[currentUserKey].santaChat || [];
+            const mySantaIncoming = myChat.filter(m => m.senderRole === 'santa').length;
+            const mySantaUnread = Math.max(0, mySantaIncoming - record.mySantaIncomingSeen);
+
+            // Входящие от моего подопечного (senderRole === 'recipient')
+            const targetKey = db[currentUserKey].target;
+            const targetChat = (targetKey && db[targetKey]) ? (db[targetKey].santaChat || []) : [];
+            const targetIncoming = targetChat.filter(m => m.senderRole === 'recipient').length;
+            const targetUnread = Math.max(0, targetIncoming - record.targetIncomingSeen);
+
+            return { mySantaUnread, targetUnread, mySantaIncoming, targetIncoming };
+        }
+
+        function updateUnreadBadges() {
+            if (!currentUserKey) return;
+            const { mySantaUnread, targetUnread } = getUnreadCounts();
+            const totalUnread = mySantaUnread + targetUnread;
+
+            // 1. Бейдж на чате от моего Санты (слева)
+            const myBadge = document.getElementById('mySantaUnreadBadge');
+            const myCountEl = document.getElementById('mySantaUnreadCount');
+            const myMarkBtn = document.getElementById('mySantaMarkReadBtn');
+            if (mySantaUnread > 0) {
+                myBadge.classList.add('visible');
+                myCountEl.innerText = mySantaUnread === 1 ? '1 nou' : `${mySantaUnread} noi`;
+                myMarkBtn.style.display = 'inline-block';
+            } else {
+                myBadge.classList.remove('visible');
+                myMarkBtn.style.display = 'none';
+            }
+
+            // 2. Бейдж на карточке подопечного (справа)
+            const tBadge = document.getElementById('targetUnreadBadge');
+            const tCountEl = document.getElementById('targetUnreadCount');
+            const tMarkBtn = document.getElementById('targetMarkReadBtn');
+            if (targetUnread > 0) {
+                tBadge.classList.add('visible');
+                tCountEl.innerText = targetUnread === 1 ? '1 nou' : `${targetUnread} noi`;
+                if (tMarkBtn) tMarkBtn.style.display = 'inline-block';
+            } else {
+                tBadge.classList.remove('visible');
+                if (tMarkBtn) tMarkBtn.style.display = 'none';
+            }
+
+            // 3. Общий индикатор в верхней панели
+            const hudBtn = document.getElementById('hudUnreadBtn');
+            const hudTxt = document.getElementById('hudUnreadText');
+            if (totalUnread > 0) {
+                hudBtn.classList.add('visible');
+                hudTxt.innerText = totalUnread === 1 ? '1 mesaj nou' : `${totalUnread} mesaje noi`;
+            } else {
+                hudBtn.classList.remove('visible');
+            }
+        }
+
+        function markChatAsRead(channel) {
+            if (!currentUserKey) return;
+            const record = getUserReadRecord(currentUserKey);
+
+            if (channel === 'mySanta') {
+                const myChat = db[currentUserKey].santaChat || [];
+                record.mySantaIncomingSeen = myChat.filter(m => m.senderRole === 'santa').length;
+            } else if (channel === 'target') {
+                const targetKey = db[currentUserKey].target;
+                const targetChat = (targetKey && db[targetKey]) ? (db[targetKey].santaChat || []) : [];
+                record.targetIncomingSeen = targetChat.filter(m => m.senderRole === 'recipient').length;
+            }
+
+            saveReadState();
+            updateUnreadBadges();
+        }
+
+        function scrollToUnreadChat() {
+            const { mySantaUnread, targetUnread } = getUnreadCounts();
+            if (mySantaUnread > 0) {
+                document.getElementById('mySantaChatCard').scrollIntoView({ behavior: 'smooth', block: 'center' });
+                markChatAsRead('mySanta');
+            } else if (targetUnread > 0) {
+                document.getElementById('targetCardContainer').scrollIntoView({ behavior: 'smooth', block: 'center' });
+                if (isTargetRevealed) markChatAsRead('target');
+            }
+        }
+
+        function renderAllChats() {
+            if (!currentUserKey) return;
+
+            const myChat = db[currentUserKey].santaChat || [];
+            renderChatList('mySantaChatMessages', myChat, 'recipient');
+
+            const targetKey = db[currentUserKey].target;
+            if (targetKey && db[targetKey]) {
+                const targetChat = db[targetKey].santaChat || [];
+                renderChatList('targetChatMessages', targetChat, 'santa');
+            }
+
+            updateUnreadBadges();
+        }
+
+        function renderChatList(containerId, messages, viewerRole) {
+            const container = document.getElementById(containerId);
+            if (!container) return;
+
+            if (!messages || messages.length === 0) {
+                container.innerHTML = `<p style="color:#64748b; font-size:12.5px; text-align:center; padding:12px 0;">Încă nu sunt mesaje aici...</p>`;
+                return;
+            }
+
+            container.innerHTML = '';
+            messages.forEach(msg => {
+                const isMine = msg.senderRole === viewerRole;
+                const div = document.createElement('div');
+                div.className = `chat-bubble ${isMine ? 'mine' : 'theirs'}`;
+
+                const targetName = (db[currentUserKey]?.target && db[db[currentUserKey].target])
+                    ? db[db[currentUserKey].target].displayName
+                    : 'Destinatar';
+
+                const senderLabel = isMine
+                    ? 'Tu'
+                    : (msg.senderRole === 'santa' ? '🎅 Secret Santa' : `🎁 ${targetName}`);
+
+                div.innerHTML = `
+                    <div class="chat-meta">${senderLabel} • ${msg.time || ''}</div>
+                    <div>${escapeHtml(msg.text)}</div>
+                `;
+                container.appendChild(div);
+            });
+
+            container.scrollTop = container.scrollHeight;
+        }
+
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.innerText = text;
+            return div.innerHTML;
+        }
+
+        async function sendChatMessage(direction) {
+            if (!currentUserKey) return;
+
+            const isToTarget = direction === 'toTarget';
+            const inputEl = document.getElementById(isToTarget ? 'targetChatInput' : 'mySantaChatInput');
+            const text = inputEl.value.trim();
+            if (!text) return;
+
+            const recipientKey = isToTarget ? db[currentUserKey].target : currentUserKey;
+            const senderRole = isToTarget ? 'santa' : 'recipient';
+
+            inputEl.value = '';
+            setSyncIndicator('syncing');
+
+            try {
+                const res = await fetch(`${FIREBASE_BASE_URL}/${DB_NODE}/${recipientKey}/santaChat.json`);
+                if (res.ok) {
+                    const remoteChat = await res.json();
+                    db[recipientKey].santaChat = Array.isArray(remoteChat)
+                        ? remoteChat
+                        : (remoteChat ? Object.values(remoteChat) : []);
+                }
+            } catch (e) {}
+
+            if (!Array.isArray(db[recipientKey].santaChat)) {
+                db[recipientKey].santaChat = [];
+            }
+
+            const now = new Date();
+            const timeStr = `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
+
+            db[recipientKey].santaChat.push({
+                senderRole: senderRole,
+                text: text,
+                time: timeStr
+            });
+
+            // Считаем открытый чат прочитанным при отправке ответа
+            markChatAsRead(isToTarget ? 'target' : 'mySanta');
+
+            renderAllChats();
+            await syncUserToCloud(recipientKey);
+        }
     </script>
 </body>
 </html>
