@@ -597,11 +597,31 @@
         }
         .chat-meta {
             font-size: 10px;
-            opacity: 0.75;
+            opacity: 0.82;
             margin-bottom: 3px;
             font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 0.4px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+        }
+        .chat-del-btn {
+            background: none;
+            border: none;
+            color: rgba(255, 255, 255, 0.65);
+            cursor: pointer;
+            font-size: 11px;
+            padding: 2px 4px;
+            border-radius: 4px;
+            transition: 0.2s;
+            line-height: 1;
+        }
+        .chat-del-btn:hover {
+            color: #fef08a;
+            background: rgba(0, 0, 0, 0.25);
+            transform: scale(1.12);
         }
         .chat-input-row {
             display: flex;
@@ -2573,7 +2593,7 @@
             }
         }
 
-        // ====== 10. АНОНИМНЫЙ ЧАТ И СЧЁТЧИК НЕПРОЧИТАННЫХ ======
+        // ====== 10. АНОНИМНЫЙ ЧАТ, УДАЛЕНИЕ СООБЩЕНИЙ И СЧЁТЧИК НЕПРОЧИТАННЫХ ======
         function getUserReadRecord(userKey) {
             if (!chatReadState[userKey]) {
                 chatReadState[userKey] = { mySantaIncomingSeen: 0, targetIncomingSeen: 0 };
@@ -2697,8 +2717,10 @@
                 return;
             }
 
+            const chatOwnerKey = (viewerRole === 'recipient') ? currentUserKey : db[currentUserKey].target;
+
             container.innerHTML = '';
-            messages.forEach(msg => {
+            messages.forEach((msg, index) => {
                 const isMine = msg.senderRole === viewerRole;
                 const div = document.createElement('div');
                 div.className = `chat-bubble ${isMine ? 'mine' : 'theirs'}`;
@@ -2711,8 +2733,15 @@
                     ? 'Tu'
                     : (msg.senderRole === 'santa' ? '🎅 Secret Santa' : `🎁 ${targetName}`);
 
+                const deleteBtnHtml = isMine
+                    ? `<button class="chat-del-btn" onclick="event.stopPropagation(); deleteChatMessage('${chatOwnerKey}', ${index})" title="Șterge mesajul"><i class="fa-solid fa-trash"></i></button>`
+                    : '';
+
                 div.innerHTML = `
-                    <div class="chat-meta">${senderLabel} • ${msg.time || ''}</div>
+                    <div class="chat-meta">
+                        <span>${senderLabel} • ${msg.time || ''}</span>
+                        ${deleteBtnHtml}
+                    </div>
                     <div>${escapeHtml(msg.text)}</div>
                 `;
                 container.appendChild(div);
@@ -2725,6 +2754,27 @@
             const div = document.createElement('div');
             div.innerText = text;
             return div.innerHTML;
+        }
+
+        async function deleteChatMessage(chatOwnerKey, msgIndex) {
+            if (!currentUserKey || !db[chatOwnerKey]) return;
+
+            setSyncIndicator('syncing');
+            try {
+                const res = await fetch(`${FIREBASE_BASE_URL}/${DB_NODE}/${chatOwnerKey}/santaChat.json`);
+                if (res.ok) {
+                    const remoteChat = await res.json();
+                    db[chatOwnerKey].santaChat = Array.isArray(remoteChat)
+                        ? remoteChat
+                        : (remoteChat ? Object.values(remoteChat) : []);
+                }
+            } catch (e) {}
+
+            if (Array.isArray(db[chatOwnerKey].santaChat) && db[chatOwnerKey].santaChat[msgIndex]) {
+                db[chatOwnerKey].santaChat.splice(msgIndex, 1);
+                renderAllChats();
+                await syncUserToCloud(chatOwnerKey);
+            }
         }
 
         async function sendChatMessage(direction) {
